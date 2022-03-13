@@ -10,13 +10,13 @@
 	Comments for Jose Martinez Castro	</title>
 	<atom:link href="https://josemartinez18.github.io/3dportfolio/comments/feed/" rel="self" type="application/rss+xml" />
 	<link>https://josemartinez18.github.io/3dportfolio/</link>
-	<description>3D Portfolio</description>
+	<description>Portfolio</description>
 	<lastBuildDate>Wed, 19 May 2021 08:20:11 +0000</lastBuildDate>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=5.9</generator>
+	<generator>https://wordpress.org/?v=5.9.2</generator>
 	<item>
 		<title>
 		Comment on Hello world! by A WordPress Commenter		</title>
@@ -38,11 +38,47 @@ Commenter avatars come from <a href="https://gravatar.com/" rel="nofollow ugc">G
 		<item>
 		<title>
 		Comment on Hello world! by A WordPress Commenter		</title>
+		<link>https://josemartinez18.github.io/3dportfolio/2021/04/21/hello-world-3/#comment-6</link>
+
+		<dc:creator><![CDATA[A WordPress Commenter]]></dc:creator>
+		<pubDate>Wed, 21 Apr 2021 11:51:20 +0000</pubDate>
+		<guid isPermaLink="false">https://qi84.qodeinteractive.com/?p=1#comment-6</guid>
+
+					<description><![CDATA[Hi, this is a comment.
+To get started with moderating, editing, and deleting comments, please visit the Comments screen in the dashboard.
+Commenter avatars come from &lt;a href=&quot;https://gravatar.com&quot;/ rel=&quot;nofollow ugc&quot;&gt;Gravatar&lt;/a&gt;.]]></description>
+			<content:encoded><![CDATA[<p>Hi, this is a comment.<br />
+To get started with moderating, editing, and deleting comments, please visit the Comments screen in the dashboard.<br />
+Commenter avatars come from <a href="https://gravatar.com/" rel="nofollow ugc">Gravatar</a>.</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		Comment on Hello world! by A WordPress Commenter		</title>
 		<link>https://josemartinez18.github.io/3dportfolio/2020/10/19/hello-world-2/#comment-5</link>
 
 		<dc:creator><![CDATA[A WordPress Commenter]]></dc:creator>
 		<pubDate>Mon, 19 Oct 2020 11:13:03 +0000</pubDate>
 		<guid isPermaLink="false">https://qi41.qodeinteractive.com/?p=1#comment-5</guid>
+
+					<description><![CDATA[Hi, this is a comment.
+To get started with moderating, editing, and deleting comments, please visit the Comments screen in the dashboard.
+Commenter avatars come from &lt;a href=&quot;https://gravatar.com&quot;/ rel=&quot;nofollow ugc&quot;&gt;Gravatar&lt;/a&gt;.]]></description>
+			<content:encoded><![CDATA[<p>Hi, this is a comment.<br />
+To get started with moderating, editing, and deleting comments, please visit the Comments screen in the dashboard.<br />
+Commenter avatars come from <a href="https://gravatar.com/" rel="nofollow ugc">Gravatar</a>.</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		Comment on Hello world! by A WordPress Commenter		</title>
+		<link>https://josemartinez18.github.io/3dportfolio/2020/09/28/hello-world-4/#comment-7</link>
+
+		<dc:creator><![CDATA[A WordPress Commenter]]></dc:creator>
+		<pubDate>Mon, 28 Sep 2020 09:53:19 +0000</pubDate>
+		<guid isPermaLink="false">https://qi4.qodeinteractive.com/?p=1#comment-7</guid>
 
 					<description><![CDATA[Hi, this is a comment.
 To get started with moderating, editing, and deleting comments, please visit the Comments screen in the dashboard.

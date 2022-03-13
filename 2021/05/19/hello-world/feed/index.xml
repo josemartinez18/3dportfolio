@@ -10,13 +10,13 @@
 	Comments on: Hello world!	</title>
 	<atom:link href="https://josemartinez18.github.io/3dportfolio/2021/05/19/hello-world/feed/" rel="self" type="application/rss+xml" />
 	<link>https://josemartinez18.github.io/3dportfolio/2021/05/19/hello-world/</link>
-	<description>3D Portfolio</description>
+	<description>Portfolio</description>
 	<lastBuildDate>Wed, 19 May 2021 08:20:11 +0000</lastBuildDate>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=5.9</generator>
+	<generator>https://wordpress.org/?v=5.9.2</generator>
 	<item>
 		<title>
 		By: A WordPress Commenter		</title>
