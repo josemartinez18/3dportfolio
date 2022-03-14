@@ -8,8 +8,8 @@
 <channel>
 	<title>
 	Comments on: Hello world!	</title>
-	<atom:link href="https://josemartinez18.github.io/3dportfolio/2021/04/21/hello-world-3/feed/" rel="self" type="application/rss+xml" />
-	<link>https://josemartinez18.github.io/3dportfolio/2021/04/21/hello-world-3/</link>
+	<atom:link href="https://josemartinezcastro.com/2021/04/21/hello-world-3/feed/" rel="self" type="application/rss+xml" />
+	<link>https://josemartinezcastro.com/2021/04/21/hello-world-3/</link>
 	<description>Portfolio</description>
 	<lastBuildDate>Wed, 21 Apr 2021 11:51:20 +0000</lastBuildDate>
 	<sy:updatePeriod>
@@ -20,7 +20,7 @@
 	<item>
 		<title>
 		By: A WordPress Commenter		</title>
-		<link>https://josemartinez18.github.io/3dportfolio/2021/04/21/hello-world-3/#comment-6</link>
+		<link>https://josemartinezcastro.com/2021/04/21/hello-world-3/#comment-6</link>
 
 		<dc:creator><![CDATA[A WordPress Commenter]]></dc:creator>
 		<pubDate>Wed, 21 Apr 2021 11:51:20 +0000</pubDate>
