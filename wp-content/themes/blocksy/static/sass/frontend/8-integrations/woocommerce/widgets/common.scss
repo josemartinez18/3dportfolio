@@ -1,0 +1,40 @@
+.widget_product_categories li {
+	.count {
+		float: right;
+	}
+}
+
+// .woocommerce-widget-layered-nav-list li {
+// 	display: flex;
+// 	align-items: center;
+
+// 	.count {
+// 		margin-inline-start: auto;
+// 		font-size: 80%;
+// 	}
+// }
+
+.wc-block-checkbox-list li label,
+.woocommerce-widget-layered-nav-list li {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	
+
+	.wc-filter-element-label-list-count,
+	.count {
+		opacity: 1;
+		font-size: 80%;
+		margin-inline-start: auto;
+	}
+}
+
+
+
+
+.widget_rating_filter a,
+.widget_product_categories .count,
+.widget_layered_nav_filters a:before,
+.woocommerce-widget-layered-nav-list .count {
+	font-size: 15px;
+}
