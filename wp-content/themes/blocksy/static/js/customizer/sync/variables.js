@@ -226,6 +226,14 @@ const getAllVariables = () => {
 							spacious: '2em',
 						}[value]),
 				},
+
+				{
+					selector: ':root',
+					variable: 'has-content-spacing',
+					extractValue: (value) => {
+						return value === 'none' ? '0' : '1'
+					},
+				},
 			],
 
 			// Buttons

@@ -456,13 +456,13 @@ export const getWooVariablesFor = () => ({
 
 	success_message_button_text_color: [
 		{
-			selector: '.woocommerce-message .button',
+			selector: '.woocommerce-message',
 			variable: 'buttonTextInitialColor',
 			type: 'color:default',
 		},
 
 		{
-			selector: '.woocommerce-message .button',
+			selector: '.woocommerce-message',
 			variable: 'buttonTextHoverColor',
 			type: 'color:hover',
 		},
@@ -470,13 +470,13 @@ export const getWooVariablesFor = () => ({
 
 	success_message_button_background: [
 		{
-			selector: '.woocommerce-message .button',
+			selector: '.woocommerce-message',
 			variable: 'buttonInitialColor',
 			type: 'color:default',
 		},
 
 		{
-			selector: '.woocommerce-message .button',
+			selector: '.woocommerce-message',
 			variable: 'buttonHoverColor',
 			type: 'color:hover',
 		},
@@ -505,13 +505,13 @@ export const getWooVariablesFor = () => ({
 
 	info_message_button_text_color: [
 		{
-			selector: '.woocommerce-info .button',
+			selector: '.woocommerce-info',
 			variable: 'buttonTextInitialColor',
 			type: 'color:default',
 		},
 
 		{
-			selector: '.woocommerce-info .button',
+			selector: '.woocommerce-info',
 			variable: 'buttonTextHoverColor',
 			type: 'color:hover',
 		},
@@ -519,13 +519,13 @@ export const getWooVariablesFor = () => ({
 
 	info_message_button_background: [
 		{
-			selector: '.woocommerce-info .button',
+			selector: '.woocommerce-info',
 			variable: 'buttonInitialColor',
 			type: 'color:default',
 		},
 
 		{
-			selector: '.woocommerce-info .button',
+			selector: '.woocommerce-info',
 			variable: 'buttonHoverColor',
 			type: 'color:hover',
 		},
@@ -554,13 +554,13 @@ export const getWooVariablesFor = () => ({
 
 	error_message_button_text_color: [
 		{
-			selector: '.woocommerce-error .button',
+			selector: '.woocommerce-error',
 			variable: 'buttonTextInitialColor',
 			type: 'color:default',
 		},
 
 		{
-			selector: '.woocommerce-error .button',
+			selector: '.woocommerce-error',
 			variable: 'buttonTextHoverColor',
 			type: 'color:hover',
 		},
@@ -568,13 +568,13 @@ export const getWooVariablesFor = () => ({
 
 	error_message_button_background: [
 		{
-			selector: '.woocommerce-error .button',
+			selector: '.woocommerce-error',
 			variable: 'buttonInitialColor',
 			type: 'color:default',
 		},
 
 		{
-			selector: '.woocommerce-error .button',
+			selector: '.woocommerce-error',
 			variable: 'buttonHoverColor',
 			type: 'color:hover',
 		},

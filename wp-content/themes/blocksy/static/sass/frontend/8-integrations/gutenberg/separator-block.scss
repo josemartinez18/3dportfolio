@@ -1,15 +1,12 @@
 .wp-block-separator {
-	clear: both;
-	margin-top: calc(var(--content-spacing) + 10px);
-	margin-bottom: calc(var(--content-spacing) + 10px);
-	max-width: var(--block-max-width);
+	border: none;
+	color: var(--form-field-border-initial-color);
+
+	&:not(.is-style-wide):not(.is-style-dots) {
+		--block-max-width: 100px;
+	}
 
 	&:not(.is-style-dots) {
 		height: 2px;
-		border: none;
-
-		&:not(.is-style-wide) {
-			--block-max-width: 10%;
-		}
 	}
 }

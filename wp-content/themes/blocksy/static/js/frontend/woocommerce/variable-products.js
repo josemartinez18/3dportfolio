@@ -80,18 +80,24 @@ const replaceFirstImage = ({ container, image }) => {
 			}
 
 			if (img.getAttribute('width')) {
-				img.width = image.width
+				img.width =
+					image.width ||
+					(img.closest('.flexy-pills')
+						? image.gallery_thumbnail_src_w
+						: image.src_w)
 			}
 
 			if (img.getAttribute('height')) {
-				img.height = image.height
+				img.height =
+					image.height ||
+					(img.closest('.flexy-pills')
+						? image.gallery_thumbnail_src_h
+						: image.src_h)
 			}
 
-			img.src = image.src
-
-			if (img.sizes) {
-				img.sizes = image.sizes
-			}
+			img.src = img.closest('.flexy-pills')
+				? image.gallery_thumbnail_src
+				: image.src
 
 			if (image.srcset && img.srcset && image.srcset !== 'false') {
 				img.srcset = image.srcset

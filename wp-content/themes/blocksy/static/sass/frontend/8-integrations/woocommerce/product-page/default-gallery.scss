@@ -26,8 +26,16 @@ div.woocommerce-product-gallery {
 			--thumbs-width: 25%;
 		}
 
-		&:hover:not(.active) {
+		&:hover {
 			opacity: 0.75;
+		}
+
+		&.active {
+			opacity: 1;
+			
+			.ct-image-container:after {
+				border-color: rgba(0,0,0,0.2);
+			}
 		}
 
 		.ct-image-container:after {
@@ -41,12 +49,6 @@ div.woocommerce-product-gallery {
 			pointer-events: none;
 			border: 2px solid rgba(0,0,0,0);
 			transition: border-color 0.25s cubic-bezier(.215,.61,.355,1);
-		}
-
-		&.active {
-			.ct-image-container:after {
-				border-color: rgba(0,0,0,0.2);
-			}
 		}
 	}
 }

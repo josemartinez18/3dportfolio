@@ -3,7 +3,8 @@ p {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	margin-bottom: 20px;
+	// margin-bottom: 20px;
+	margin-bottom: calc(0.3em + 10px);
 }
 
 ul, ol {
@@ -33,28 +34,62 @@ ul, ol {
 	> * {
 		margin-bottom: var(--content-spacing);
 
-		&:first-child {
-			margin-top: 0 !important;
-		}
-
 		&:last-child {
-			margin-bottom: 0 !important;
+			margin-bottom: 0;
 		}
 	}
 
 	// headings
-	h1, h2, h3, h4, h5, h6 {
+	* + :is(h1, h2, h3, h4, h5, h6) {
 		margin-top: var(--content-spacing);
-		margin-bottom: calc(0.2em + 10px);
+	}
 
-		&:first-child {
-			margin-top: 0;
-		}
+	h1, h2, h3, h4, h5, h6 {
+		margin-bottom: calc(var(--has-content-spacing, 1) * (0.3em + 10px));
 
 		&:last-child {
 			margin-bottom: 0;
 		}
 	}
+
+	// h1, h2, h3, h4, h5, h6 {
+	// 	margin-bottom: calc(var(--content-spacing) - 0.95em);
+
+	// 	&:last-child {
+	// 		margin-bottom: 0;
+	// 	}
+	// }
+
+
+
+	// OLD FLOW
+
+	// all elements
+	// > * {
+	// 	margin-bottom: var(--content-spacing);
+
+	// 	&:first-child {
+	// 		margin-top: 0 !important;
+	// 	}
+
+	// 	&:last-child {
+	// 		margin-bottom: 0 !important;
+	// 	}
+	// }
+
+	// headings
+	// h1, h2, h3, h4, h5, h6 {
+	// 	margin-top: var(--content-spacing);
+	// 	margin-bottom: calc(0.2em + 10px);
+
+	// 	&:first-child {
+	// 		margin-top: 0;
+	// 	}
+
+	// 	&:last-child {
+	// 		margin-bottom: 0;
+	// 	}
+	// }
 }
 
 

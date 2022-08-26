@@ -283,7 +283,7 @@
 	.quantity[data-type="type-1"] {
 		input[type="number"] {
 			--form-field-border-width: 1px 1px 1px 0;
-			padding: 0 5px 0 calc(25% + 3px);
+			--form-field-padding: 0 5px 0 calc(25% + 3px);
 		}
 
 		.ct-increase,

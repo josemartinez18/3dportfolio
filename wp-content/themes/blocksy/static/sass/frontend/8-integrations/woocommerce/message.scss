@@ -41,6 +41,7 @@
 	}
 
 	.button,
+	.showlogin,
 	.restore-item {
 		order: 2;
 		--buttonFontSize: 14px;
@@ -93,15 +94,8 @@ ul.woocommerce-error {
 		align-items: center;
 		column-gap: 0.3em;
 
-		@include media-breakpoint-up (sm) {
-		}
-
 		@include media-breakpoint-down (xs) {
 			flex-wrap: wrap;
 		}
 	}
 }
-
-
-
-

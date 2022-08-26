@@ -6,14 +6,6 @@
 	top: calc(var(--admin-bar, 0px) + var(--frame-size, 0px) + var(--header-sticky-offset, 0px));
 	left: var(--frame-size, 0px);
 	right: calc(var(--frame-size, 0px) + var(--scrollbar-width, 0px));
-	// inset-inline-start: var(--frame-size, 0px);
-	// inset-inline-end: calc(var(--frame-size, 0px) + var(--scrollbar-width, 0px));
-}
-
-[data-sticky*='auto-hide'] {
-	&[data-sticky*='yes'] {
-		// transform: translateY(var(--translate-y, -100%));
-	}
 }
 
 // [data-sticky*='auto-hide'],

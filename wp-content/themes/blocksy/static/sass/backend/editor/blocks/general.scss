@@ -6,12 +6,9 @@ htmlroot {
 :root {
 
 	// page structure (boxed/normal)
-	// width: 100%;
 	width: calc(100% - 20px);
 	box-sizing: border-box;
 	margin: 10px var(--has-boxed, auto);
-	// margin-left: var(--has-boxed, auto);
-	// margin-right: var(--has-boxed, auto);
 	max-width: var(--has-boxed, var(--block-max-width));
 
 
@@ -64,8 +61,4 @@ htmlroot {
 		padding: 30px;
 		box-sizing: border-box;
 	}
-
-	// p.has-background {
-	// 	box-sizing: border-box;
-	// }
 }

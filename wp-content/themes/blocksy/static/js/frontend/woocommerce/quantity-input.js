@@ -2,26 +2,24 @@ import $ from 'jquery'
 
 const listenToClicks = () =>
 	[...document.querySelectorAll('.quantity')].map((singleQuantity) => {
-		if (singleQuantity.querySelector('.ct-increase')) {
-			;[...singleQuantity.querySelectorAll('input')].map((input) => {
-				if (input.hasInputListener) {
-					return
-				}
-				input.hasInputListener = true
+		;[...singleQuantity.querySelectorAll('input')].map((input) => {
+			if (input.hasInputListener) {
+				return
+			}
+			input.hasInputListener = true
 
-				input.addEventListener('input', (e) => {
-					if (input.closest('tr')) {
-						;[
-							...input
-								.closest('tr')
-								.querySelectorAll('.quantity input'),
-						]
-							.filter((i) => i !== input)
-							.map((input) => (input.value = e.target.value))
-					}
-				})
+			input.addEventListener('input', (e) => {
+				if (input.closest('tr')) {
+					;[
+						...input
+							.closest('tr')
+							.querySelectorAll('.quantity input'),
+					]
+						.filter((i) => i !== input)
+						.map((input) => (input.value = e.target.value))
+				}
 			})
-		}
+		})
 	})
 
 let mounted = false

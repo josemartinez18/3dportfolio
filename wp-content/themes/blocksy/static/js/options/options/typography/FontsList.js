@@ -75,6 +75,8 @@ const SingleFont = ({
 			key={family.family}>
 			<span className="ct-font-name">
 				{familyForDisplay(family.display || family.family)}
+
+				{family?.variable && <span>variable</span>}
 			</span>
 			<span
 				style={{

@@ -13,7 +13,8 @@ $buttons-type-1:
 	// special buttons
 	'button[class*="ajax"]',
 	'button.regform-button',
-	'a.restore-item'
+	'a.restore-item',
+	'a.showlogin'
 ;
 
 #{$buttons-type-1} {

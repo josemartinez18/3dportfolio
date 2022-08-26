@@ -76,11 +76,8 @@ const loadGoogleFonts = (font_family, variation) => {
 
 	WebFontLoader.load({
 		google: {
-			families: [
-				`${font_family}:${parseInt(variation[1], 10) * 100}${
-					variation[0] === 'i' ? 'i' : ''
-				}&display=swap`,
-			],
+			api: 'https://fonts.googleapis.com/css2',
+			families: [font_family],
 		},
 		classes: false,
 		text: 'abcdefghijklmnopqrstuvwxyz',
@@ -305,8 +302,7 @@ export const getTypographyVariablesFor = () => ({
 
 	...typographyOption({
 		id: 'cardProductExcerptFont',
-		selector:
-			'[data-products] .entry-excerpt',
+		selector: '[data-products] .entry-excerpt',
 	}),
 
 	...typographyOption({

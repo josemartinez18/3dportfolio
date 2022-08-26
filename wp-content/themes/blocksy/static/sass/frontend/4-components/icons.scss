@@ -1,10 +1,15 @@
 .ct-icon,
 .ct-icon-container svg {
-	position: relative;
+	// position: relative;
 	width: var(--icon-size, 15px);
 	height: var(--icon-size, 15px);
 	fill: var(--icon-color, var(--color));
 	transition: var(--icon-transition, fill 0.12s cubic-bezier(.455,.03,.515,.955));
+}
+
+.ct-icon,
+.ct-icon-container {
+	position: relative;
 }
 
 .ct-icon-container {
@@ -23,6 +28,7 @@
 	--icon-size: 25px;
 }
 
+
 // icon position
 // pro - button & megamenu
 .ct-icon-container {
@@ -34,6 +40,7 @@
 		margin-inline-start: 0.5em;
 	}
 }
+
 
 // icon shape
 [data-icons-type*=":"] {

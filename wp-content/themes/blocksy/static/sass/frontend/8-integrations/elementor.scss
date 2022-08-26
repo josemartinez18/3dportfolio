@@ -21,18 +21,6 @@
 	// flex container
 	.e-container {
 		--container-max-width: #{'min(var(--block-max-width, var(--normal-container-max-width)), var(--container-width-base))'};
-
-
-		// --blocksy-padding-base: calc((100% - var(--content-width)) / 2);
-
-		// --blocksy-padding-right: #{'max(var(--blocksy-padding-base), var(--padding-right))'};
-		// --blocksy-padding-left: #{'max(var(--blocksy-padding-base), var(--padding-left))'};
-
-
-		// padding: var(--padding-top)
-		// 		 var(--blocksy-padding-right) 
-		// 		 var(--padding-bottom) 
-		// 		 var(--blocksy-padding-left);
 	}
 }
 
