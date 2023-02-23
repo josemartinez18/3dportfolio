@@ -113,7 +113,7 @@
 											'qi-addons-for-elementor'
 										),
 										title,
-										'<a class="qodef-dialog-box-link" target="_blank" href="https://qodeinteractive.com/qi-addons-for-elementor/pricing/">',
+										'<a class="qodef-dialog-box-link" target="_blank" href="https://qodeinteractive.com/pricing-elementor/">',
 										'</a>'
 									);
 								}

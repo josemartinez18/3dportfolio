@@ -4,6 +4,7 @@ import {
 	useState,
 	useRef,
 	useContext,
+	Fragment,
 } from '@wordpress/element'
 import OutsideClickHandler from './react-outside-click-handler'
 import classnames from 'classnames'
@@ -21,21 +22,20 @@ const Border = ({ value, option, onChange }) => {
 			<div
 				className={classnames('ct-value-changer', {
 					['active']: isOpen,
-					['ct-disabled']: value.style === 'none' || value.inherit,
 				})}>
-				<input
-					type="number"
-					value={value.width}
-					// disabled={value.style === 'none'}
-					onChange={({ target: { value: width } }) =>
-						onChange({
-							...value,
-							width: clamp(1, 5, parseInt(width, 10) || 1),
-						})
-					}
-				/>
-
-				<span className="ct-value-divider"></span>
+				{value.style !== 'none' && !value.inherit && (
+					<input
+						type="number"
+						value={value.width}
+						// disabled={value.style === 'none'}
+						onChange={({ target: { value: width } }) =>
+							onChange({
+								...value,
+								width: clamp(1, 5, parseInt(width, 10) || 1),
+							})
+						}
+					/>
+				)}
 
 				<span
 					className="ct-current-value"
@@ -48,107 +48,82 @@ const Border = ({ value, option, onChange }) => {
 						: null}
 				</span>
 				<OutsideClickHandler
+					className="ct-units-list"
 					disabled={!isOpen}
 					onOutsideClick={() => {
 						if (!isOpen) return
 						setIsOpen(false)
 					}}>
-					<ul className="ct-styles-list">
-						{['solid', 'dashed', 'dotted', 'none']
-							.reduce(
-								(current, el, index) => [
-									...current.slice(
-										0,
-										index % 2 === 0 ? undefined : -1
-									),
-									...(index % 2 === 0
-										? [[el]]
-										: [
-												[
-													current[
-														current.length - 1
-													][0],
-													el,
-												],
-										  ]),
-								],
-								[]
-							)
-							.map((group) => (
-								<li key={group[0]}>
-									{group.map((style) => (
-										<span
-											className={classnames({
-												active: style === value.style,
-											})}
-											data-style={style}
-											key={style}
-											onClick={() => {
-												onChange({
-													...value,
-													style,
-													...(Object.keys(
-														option.value
-													).indexOf('inherit') > -1
-														? {
-																inherit: false,
-														  }
-														: {}),
-												})
-												setIsOpen(false)
-											}}
-											data-style={style}>
-											{style === 'none'
-												? __('None', 'blocksy')
-												: null}
-										</span>
-									))}
-								</li>
-							))}
-					</ul>
+					{['solid', 'dashed', 'dotted', 'none'].map((style) => (
+						<span
+							key={style}
+							onClick={() => {
+								onChange({
+									...value,
+									style,
+									...(Object.keys(option.value).indexOf(
+										'inherit'
+									) > -1
+										? {
+												inherit: false,
+										  }
+										: {}),
+								})
+								setIsOpen(false)
+							}}
+							data-style={style}>
+							{style === 'none' ? __('None', 'blocksy') : null}
+						</span>
+					))}
 				</OutsideClickHandler>
 			</div>
 
-			<ColorPicker
-				onChange={(colorValue) =>
-					onChange({
-						...value,
-						color: colorValue.default,
-					})
-				}
-				option={{
-					pickers: [
-						{
-							id: 'default',
-							title: __('Initial', 'blocksy'),
-						},
-					],
-				}}
-				value={{
-					default: value.color,
-				}}
-			/>
+			{value.style !== 'none' && !value.inherit && (
+				<Fragment>
+					<ColorPicker
+						onChange={(colorValue) =>
+							onChange({
+								...value,
+								color: colorValue.default,
+							})
+						}
+						option={{
+							pickers: [
+								{
+									id: 'default',
+									title: __('Initial', 'blocksy'),
+								},
+							],
+						}}
+						value={{
+							default: value.color,
+						}}
+					/>
 
-			{option.secondColor && (
-				<ColorPicker
-					onChange={(colorValue) =>
-						onChange({
-							...value,
-							secondColor: colorValue.default,
-						})
-					}
-					option={{
-						pickers: [
-							{
-								id: 'default',
-								title: __('Hover', 'blocksy'),
-							},
-						],
-					}}
-					value={{
-						default: value.secondColor || option.value.secondColor,
-					}}
-				/>
+					{option.secondColor && (
+						<ColorPicker
+							onChange={(colorValue) =>
+								onChange({
+									...value,
+									secondColor: colorValue.default,
+								})
+							}
+							option={{
+								pickers: [
+									{
+										id: 'default',
+										title: __('Hover', 'blocksy'),
+									},
+								],
+							}}
+							value={{
+								default:
+									value.secondColor ||
+									option.value.secondColor,
+							}}
+						/>
+					)}
+				</Fragment>
 			)}
 		</div>
 	)

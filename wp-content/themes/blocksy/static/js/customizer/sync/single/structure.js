@@ -17,36 +17,40 @@ watchOptionsWithPrefix({
 	getPrefix: () => getPrefixFor(),
 	getOptionsForPrefix: ({ prefix }) => [`${prefix}_content_area_spacing`],
 	render: ({ prefix, id }) => {
-		if (id === `${prefix}_content_area_spacing`) {
-			let el = document.querySelector('.site-main > div')
+		if (id !== `${prefix}_content_area_spacing`) {
+			return
+		}
 
-			if (!el) {
-				return
-			}
+		if (
+			(document.body.dataset.prefixCustom || '').indexOf(
+				'vertical-spacing'
+			) > -1
+		) {
+			return
+		}
 
-			let spacingComponents = []
+		let el = document.querySelector('.site-main > div')
 
-			let contentAreaSpacing = getOptionFor(
-				'content_area_spacing',
-				prefix
-			)
+		if (!el) {
+			return
+		}
 
-			if (contentAreaSpacing === 'both' || contentAreaSpacing === 'top') {
-				spacingComponents.push('top')
-			}
+		let spacingComponents = []
 
-			if (
-				contentAreaSpacing === 'both' ||
-				contentAreaSpacing === 'bottom'
-			) {
-				spacingComponents.push('bottom')
-			}
+		let contentAreaSpacing = getOptionFor('content_area_spacing', prefix)
 
-			el.removeAttribute('data-vertical-spacing')
+		if (contentAreaSpacing === 'both' || contentAreaSpacing === 'top') {
+			spacingComponents.push('top')
+		}
 
-			if (spacingComponents.length > 0) {
-				el.dataset.verticalSpacing = spacingComponents.join(':')
-			}
+		if (contentAreaSpacing === 'both' || contentAreaSpacing === 'bottom') {
+			spacingComponents.push('bottom')
+		}
+
+		el.removeAttribute('data-vertical-spacing')
+
+		if (spacingComponents.length > 0) {
+			el.dataset.verticalSpacing = spacingComponents.join(':')
 		}
 	},
 })
@@ -54,13 +58,13 @@ watchOptionsWithPrefix({
 export const getSingleContentVariablesFor = () => {
 	const prefix = getPrefixFor()
 
-	return {
-		...handleBackgroundOptionFor({
-			id: `${prefix}_background`,
-			selector: `[data-prefix="${prefix}"]`,
-			responsive: true,
-		}),
+	if (
+		(document.body.dataset.prefixCustom || '').indexOf('content-style') > -1
+	) {
+		return {}
+	}
 
+	return {
 		...makeVariablesWithCondition(
 			`${prefix}_content_style`,
 			{

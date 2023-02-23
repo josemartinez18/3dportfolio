@@ -20,9 +20,8 @@ const SecondaryItems = ({
 	inlinedItemsFromBuilder,
 	displayList = true,
 }) => {
-	const { panelsState, panelsActions, currentView, isDragging } = useContext(
-		DragDropContext
-	)
+	const { panelsState, panelsActions, currentView, isDragging } =
+		useContext(DragDropContext)
 
 	const inlinedItemsFromAllViewsBuilder = builderValue.rows.reduce(
 		(currentItems, { columns }) => [
@@ -32,11 +31,12 @@ const SecondaryItems = ({
 		[]
 	)
 
-	const secondaryItems = ct_customizer_localizations.header_builder_data.secondary_items.footer.filter(
-		({ config }) =>
-			// config.devices.indexOf(currentView) > -1 &&
-			config.enabled
-	)
+	const secondaryItems =
+		ct_customizer_localizations.header_builder_data.secondary_items.footer.filter(
+			({ config }) =>
+				// config.devices.indexOf(currentView) > -1 &&
+				config.enabled
+		)
 	const allItems = ct_customizer_localizations.header_builder_data.footer
 
 	/**
@@ -55,22 +55,25 @@ const SecondaryItems = ({
 				pull: 'clone',
 			}}
 			draggableId={'available-items'}
-			items={[
-				...secondaryItems.map(({ id }) => id),
-				...allDynamicItems,
-			].sort((a, b) => {
-				const aItemData = ct_customizer_localizations.header_builder_data[
-					'footer'
-				].find(({ id }) => id === getOriginalId(a))
-
-				const bItemData = ct_customizer_localizations.header_builder_data[
-					'footer'
-				].find(({ id }) => id === getOriginalId(b))
-
-				return aItemData.config.name.localeCompare(
-					bItemData.config.name
+			items={[...secondaryItems.map(({ id }) => id), ...allDynamicItems]
+				.filter((el) =>
+					allItems.some(({ id }) => id === getOriginalId(el))
 				)
-			})}
+				.sort((a, b) => {
+					const aItemData =
+						ct_customizer_localizations.header_builder_data[
+							'footer'
+						].find(({ id }) => id === getOriginalId(a))
+
+					const bItemData =
+						ct_customizer_localizations.header_builder_data[
+							'footer'
+						].find(({ id }) => id === getOriginalId(b))
+
+					return aItemData.config.name.localeCompare(
+						bItemData.config.name
+					)
+				})}
 			hasPointers={false}
 			panelType="footer"
 			displayWrapper={displayList}
@@ -145,8 +148,7 @@ const SecondaryItems = ({
 													builderValue.items[item]
 
 												builderValueDispatch({
-													type:
-														'ITEM_VALUE_ON_CHANGE',
+													type: 'ITEM_VALUE_ON_CHANGE',
 													payload: {
 														id: item,
 														optionId,
@@ -174,8 +176,10 @@ const SecondaryItems = ({
 											ref={container}
 											data-id={item}
 											className={cls({
-												'ct-item-in-builder': itemInBuilder,
-												'ct-builder-item': !itemInBuilder,
+												'ct-item-in-builder':
+													itemInBuilder,
+												'ct-builder-item':
+													!itemInBuilder,
 											})}
 											onClick={() => {
 												if (isDragging) {

@@ -4,16 +4,16 @@ article > .entry-content {
 		margin-left: var(--default-editor, auto);
 		margin-right: var(--default-editor, auto);
 
-		&:not(.alignfull) {
-			width: var(--default-editor, var(--block-width));
+		&.alignwide {
+			max-width: var(--default-editor, var(--block-wide-max-width));
 		}
 
-		&:not(.alignwide):not(.alignfull) {
+		&:not(.alignfull):not(.alignwide):not(.alignleft):not(.alignright) {
 			max-width: var(--default-editor, var(--block-max-width));
 		}
-	}
 
-	> .alignwide {
-		max-width: var(--default-editor, var(--block-wide-max-width));
+		&:not(.alignfull):not(.alignleft):not(.alignright) {
+			width: var(--default-editor, var(--block-width));
+		}
 	}
 }

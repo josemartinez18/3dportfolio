@@ -1,25 +1,24 @@
 $buttons-type-1:
-	// 'button',
 	'.button',
-	'.submit',
 	'.ct-button',
 	'.entry-tags a',
 	'.added_to_cart',
 	'[type="submit"]',
-	'.wp-block-file .wp-block-file__button',
-	'div:not(.is-style-outline) > .wp-block-button__link',
-	'.forminator-ui[data-design="none"] .forminator-button',
+	'.wp-element-button',
+	'.wp-block-button__link',
+	// '.wp-block-file .wp-block-file__button',
 
 	// special buttons
-	'button[class*="ajax"]',
-	'button.regform-button',
+	'a.showlogin',
 	'a.restore-item',
-	'a.showlogin'
+	'button.regform-button',
+	'button[class*="ajax"]',
+	'.submit:where(:not(div.submit))',
+	'.forminator-ui[data-design="none"] .forminator-button',
 ;
 
 #{$buttons-type-1} {
 	position: relative;
-	// z-index: 1;
 	color: var(--buttonTextInitialColor);
 	border: var(--button-border);
 	background-color: var(--buttonInitialColor);

@@ -11,6 +11,10 @@ let cacheInfo = {}
 
 export const getCacheFor = (id) => cacheInfo[id]
 
+const getNavRootEl = (nav) => {
+	return Array.from(nav.children).filter((t) => !t.matches('link'))[0]
+}
+
 const maybeCreateMoreItemsFor = (nav, onDone) => {
 	if (nav.querySelector('.more-items-container')) {
 		onDone()
@@ -38,18 +42,18 @@ const maybeCreateMoreItemsFor = (nav, onDone) => {
     <ul class="sub-menu"></ul>`
 	)
 
-	nav.firstElementChild.appendChild(moreContainer)
+	getNavRootEl(nav).appendChild(moreContainer)
 	onDone && onDone()
 }
 
-const computeItemsWidth = (nav) =>
-	Array.from(nav.firstElementChild.children)
+const computeItemsWidth = (nav) => {
+	return Array.from(getNavRootEl(nav).children)
 		.filter(
 			(el) =>
 				!el.classList.contains('.more-items-container') &&
 				el.firstElementChild
 		)
-		.map((el) => {
+		.map((el, index) => {
 			const a = el.firstElementChild
 			a.innerHTML = `<span>${a.innerHTML}</span>`
 
@@ -65,6 +69,7 @@ const computeItemsWidth = (nav) =>
 
 			return actualWidth
 		})
+}
 
 const maybeMakeCacheForAllNavs = (nav) => {
 	let baseContainer = nav.closest('[class*="ct-container"]')
@@ -80,7 +85,7 @@ const maybeMakeCacheForAllNavs = (nav) => {
 			return
 		}
 
-		if (!nav.firstElementChild) {
+		if (!getNavRootEl(nav)) {
 			return
 		}
 
@@ -88,13 +93,13 @@ const maybeMakeCacheForAllNavs = (nav) => {
 			el: nav,
 			previousRenderedWidth: null,
 			children: [
-				...Array.from(nav.firstElementChild.children).filter(
+				...Array.from(getNavRootEl(nav).children).filter(
 					(el) => !el.classList.contains('more-items-container')
 				),
 
-				...(nav.firstElementChild.querySelector('.more-items-container')
+				...(getNavRootEl(nav).querySelector('.more-items-container')
 					? [
-							...nav.firstElementChild.querySelector(
+							...getNavRootEl(nav).querySelector(
 								'.more-items-container .sub-menu'
 							).children,
 					  ]
@@ -108,7 +113,7 @@ const maybeMakeCacheForAllNavs = (nav) => {
 }
 
 export const mount = (nav) => {
-	if (!nav.firstElementChild) {
+	if (!getNavRootEl(nav)) {
 		return
 	}
 
@@ -128,7 +133,7 @@ export const mount = (nav) => {
 	if (notFit.length === 0) {
 		if (nav.querySelector('.more-items-container')) {
 			fit.map((el) => {
-				nav.firstElementChild.insertBefore(
+				getNavRootEl(nav).insertBefore(
 					el,
 					nav.querySelector('.more-items-container')
 				)
@@ -169,7 +174,7 @@ export const mount = (nav) => {
 		})
 
 		fit.map((el) => {
-			nav.firstElementChild.insertBefore(
+			getNavRootEl(nav).insertBefore(
 				el,
 				nav.querySelector('.more-items-container')
 			)

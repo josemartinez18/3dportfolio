@@ -2,16 +2,19 @@
 #bbpress-forums div.bbp-search-form {
 	margin-bottom: 20px;
 
-	input[type="text"] {
-		--form-field-height: 30px;
-		--form-field-padding: 0 7px;
-	}
+	form > div {
+		display: flex;
+		gap: 5px;
 
-	.button {
-		--buttonMinHeight: 30px;
-		--padding: 5px 15px;
-		--buttonShadow: none;
-		--buttonTransform: none;
+		input[type="text"] {
+			--form-field-height: 35px;
+		}
+
+		.button {
+			--buttonMinHeight: 35px;
+			--buttonShadow: none;
+			--buttonTransform: none;
+		}
 	}
 }
 
@@ -21,7 +24,6 @@
 		--buttonTransform: none;
 	}
 }
-
 
 #bbpress-forums fieldset {
 

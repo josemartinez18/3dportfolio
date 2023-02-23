@@ -1,6 +1,5 @@
 [data-footer*='reveal'] {
 	.site-main {
-		z-index: 1;
 		box-shadow: var(--footer-box-shadow);
 	}
 
@@ -9,7 +8,9 @@
 		bottom: var(--frame-size, 0px);
 	}
 
-	// content blocks
+
+	.site-main,
+	.ct-trending-block,
 	#main-container > [data-block] {
 		z-index: 1;
 	}

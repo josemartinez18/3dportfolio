@@ -52,6 +52,8 @@ const Typography = ({
 	// options | fonts | variations | search
 	const [currentViewCache, setCurrentViewCache] = useState('_:_')
 
+	const [isConfirmingGdpr, setIsConfirmingGdpr] = useState(false)
+
 	const typographyWrapper = useRef()
 
 	let [currentView, previousView] = useMemo(
@@ -94,6 +96,8 @@ const Typography = ({
 	const fontWeightRef = useRef()
 	const dotsRef = useRef()
 
+	const confirmationRef = useRef()
+
 	const arrowLeft = useMemo(() => {
 		const view = currentView
 
@@ -122,14 +126,42 @@ const Typography = ({
 		dotsRef && dotsRef.current,
 	])
 
+	let visualFontSize =
+		maybePromoteScalarValueIntoResponsive(value['size'])[device] ===
+		'CT_CSS_SKIP_RULE'
+			? __('Default Size', 'blocksy')
+			: maybePromoteScalarValueIntoResponsive(value['size'])[device]
+
+	let currentFontSizeUnit = maybePromoteScalarValueIntoResponsive(
+		value['size']
+	)
+		[device].toString()
+		.replace(/[0-9]/g, '')
+		.replace(/\-/g, '')
+		.replace(/\./g, '')
+		.replace('CT_CSS_SKIP_RULE', '')
+
+	let unitsList = ['px', 'em', 'rem', 'pt', 'vw']
+
+	if (
+		maybePromoteScalarValueIntoResponsive(value['size'])[device] !==
+			'CT_CSS_SKIP_RULE' &&
+		unitsList.indexOf(currentFontSizeUnit) === -1
+	) {
+		visualFontSize = __('Custom', 'blocksy')
+	}
+
 	return (
 		<div className={classnames('ct-typography', {})}>
 			<OutsideClickHandler
 				disabled={!isOpen}
 				useCapture={false}
 				className="ct-typohraphy-value"
-				additionalRefs={[popoverProps.ref]}
+				additionalRefs={[popoverProps.ref, confirmationRef]}
 				onOutsideClick={() => {
+					if (isConfirmingGdpr) {
+						return
+					}
 					setIsOpen(false)
 				}}
 				wrapperProps={{
@@ -182,15 +214,7 @@ const Typography = ({
 						}}
 						ref={fontSizeRef}
 						className="ct-size">
-						<span>
-							{maybePromoteScalarValueIntoResponsive(
-								value['size']
-							)[device] === 'CT_CSS_SKIP_RULE'
-								? __('Default Size', 'blocksy')
-								: maybePromoteScalarValueIntoResponsive(
-										value['size']
-								  )[device]}
-						</span>
+						<span>{visualFontSize}</span>
 					</span>
 					<i>/</i>
 					<span
@@ -260,6 +284,9 @@ const Typography = ({
 
 							return (
 								<TypographyModal
+									isConfirmingGdpr={isConfirmingGdpr}
+									setIsConfirmingGdpr={setIsConfirmingGdpr}
+									confirmationRef={confirmationRef}
 									wrapperProps={{
 										style: {
 											...style,

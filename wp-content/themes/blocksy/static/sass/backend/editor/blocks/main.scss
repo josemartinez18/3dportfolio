@@ -1,10 +1,11 @@
 @import 'general';
 @import 'colors';
+@import 'alignment';
 @import 'typography';
+@import 'inner-container';
 
 // blocks
 @import 'drop-cap';
-// @import 'block-file';
 @import 'block-code';
 @import 'block-quote';
 @import 'block-image';

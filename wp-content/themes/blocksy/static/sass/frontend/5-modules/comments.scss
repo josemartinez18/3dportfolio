@@ -112,35 +112,35 @@
 	@include media-breakpoint-up(md) {
 		margin-inline-start: auto;
 	}
-}
 
-.comment-edit-link,
-.comment-reply-login {
-	&:before {
-		content: '/';
-		margin-left: 3px;
-		margin-right: 3px;
+	.comment-edit-link,
+	.comment-reply-login {
+		&:before {
+			content: '/';
+			margin-left: 3px;
+			margin-right: 3px;
+		}
 	}
-}
 
-.comment-edit-link {
-	@include media-breakpoint-down(sm) {
-		display: none;
+	.comment-edit-link {
+		@include media-breakpoint-down(sm) {
+			display: none;
+		}
 	}
-}
 
-.comment-reply-link {
-	display: flex;
-	align-items: center;
-	height: 25px;
-	padding: 0 10px;
-	border-radius: 3px;
-	margin-inline-start: var(--margin-inline-start, 20px);
-	transition: color 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955),
-		background 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+	.comment-reply-link {
+		display: flex;
+		align-items: center;
+		height: 25px;
+		padding: 0 10px;
+		border-radius: 3px;
+		margin-inline-start: var(--margin-inline-start, 20px);
+		transition: color 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955),
+			background 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 
-	@include media-breakpoint-down(sm) {
-		--margin-inline-start: auto;
+		@include media-breakpoint-down(sm) {
+			--margin-inline-start: auto;
+		}
 	}
 }
 

@@ -1,51 +1,16 @@
-// .entry-content {
+// cover block inner container
+.wp-block-cover,
+.wp-block-cover-image {
 
-// 	[class*="_inner-container"] {
-// 		width: 100%;
+	.wp-block-cover__inner-container {
+		width: var(--default-editor, var(--block-width));
+		max-width: var(--default-editor, var(--block-max-width));
+	}
+}
 
-// 		> * {
-// 			margin-left: auto;
-// 			margin-right: auto;
+body .is-layout-constrained {
 
-// 			&:not(.alignfull) {
-// 				width: #{'min(calc(100% - 60px), var(--container-width))'};
-// 			}
-
-// 			&:not(.alignwide):not(.alignfull) {
-// 				max-width: var(--block-max-width);
-// 			}
-// 		}
-
-// 		> .alignwide {
-// 			max-width: var(--block-wide-max-width);
-// 		}
-// 	}
-// }
-
-.entry-content {
-
-	.wp-block-cover,
-	.wp-block-group {
-
-		[class*="_inner-container"] {
-			width: 100%;
-
-			> * {
-				margin-left: auto;
-				margin-right: auto;
-
-				&:not(.alignfull) {
-					width: #{'min(var(--container-min-width, 100%), var(--container-width))'};
-				}
-
-				&:not(.alignwide):not(.alignfull) {
-					max-width: var(--block-max-width);
-				}
-			}
-
-			> .alignwide {
-				max-width: var(--block-wide-max-width);
-			}
-		}
+	> :where(:not(.alignleft):not(.alignright):not(.alignfull)) {
+		width: var(--default-editor, var(--block-width));
 	}
 }

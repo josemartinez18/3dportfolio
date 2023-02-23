@@ -1,34 +1,5 @@
 body.rtl {
-	// color picker
-	.ct-color-picker-single:not(:last-child) {
-		margin-right: initial;
-		margin-left: 10px;
-	}
 
-	.ct-color-picker-skins li:not(:last-child) {
-		margin-right: initial;
-		margin-left: 15.7px;
-	}
-
-	.ct-color-picker-modal .wp-picker-holder .iris-slider {
-		margin-left: initial;
-		margin-right: 15px;
-	}
-
-	// spacing
-	.ct-option-spacing {
-		> span {
-			&:not(:last-of-type) {
-				margin-right: initial;
-				margin-left: 4px;
-			}
-		}
-
-		.ct-spacing-controls {
-			margin-left: initial;
-			margin-right: 4px;
-		}
-	}
 
 	// revert button
 	.ct-control {
@@ -88,8 +59,6 @@ body.rtl {
 
 	// slider
 	.ct-slider {
-		margin-left: 14px;
-		margin-right: initial;
 
 		span {
 			left: initial;
@@ -107,25 +76,7 @@ body.rtl {
 		}
 	}
 
-	.ct-option-slider .ct-slider-input {
-		margin-left: initial;
-		margin-right: 7%;
-	}
 
-	// responsive controls
-	.ct-responsive-controls {
-		li {
-			margin-right: 0;
-
-			&.ct-desktop {
-				margin-left: 18px;
-			}
-
-			&.ct-tablet {
-				margin-left: 17px;
-			}
-		}
-	}
 
 	// select
 	.ct-select-input {
@@ -142,12 +93,6 @@ body.rtl {
 	.ct-select-dropdown .ct-select-dropdown-item.selected:after {
 		right: initial;
 		left: 6px;
-	}
-
-	// tabs
-	.ct-options-container .ct-tabs > ul > li:not(:first-child) {
-		margin-left: initial;
-		margin-right: 7px;
 	}
 
 	// customizer panel
@@ -171,16 +116,8 @@ body.rtl {
 	}
 
 	.customize-panel-actions button {
-		padding: 0 0 0 24px;
-		border-left: 1px solid #ddd;
-		border-right: 4px solid #fff;
-
 		&:before {
 			content: '\f345';
-		}
-
-		&:hover {
-			border-right-color: var(--accent);
 		}
 	}
 
@@ -246,26 +183,15 @@ body.rtl {
 		margin-left: 15px;
 	}
 
-	// border
-	.ct-option-border > *:first-child {
-		margin-left: initial;
-		margin-right: 15px;
-	}
+	// value changer
+	.ct-current-value {
 
-	// shadow
-	.ct-box-shadow-values {
-		margin-right: initial;
-		margin-left: 15px;
-		padding-right: initial;
-		padding-left: 8px;
-
-		button {
-			margin-right: initial;
-			margin-left: 10px;
-			border-right: none;
-			border-left: 1px solid rgba(221, 221, 221, 0.5);
+		&:not([data-unit=clamp], [data-style=none]):before {
+			left: initial;
+			right: 0;
 		}
 	}
+
 
 	// ratio
 	.ct-ratio-predefined button {

@@ -1,5 +1,5 @@
-import './events'
 import './public-path.js'
+import './events'
 
 import ctEvents from 'ct-events'
 import $ from 'jquery'
@@ -249,6 +249,15 @@ if ($) {
 		ctEvents.trigger('blocksy:frontend:init')
 	})
 
+	// https://woocommerce.com/document/composite-products/composite-products-js-api-reference/#using-the-api
+	$('.composite_data').on('wc-composite-initializing', (event, composite) => {
+		composite.actions.add_action('component_selection_changed', () => {
+			setTimeout(() => {
+				ctEvents.trigger('blocksy:frontend:init')
+			}, 1000)
+		})
+	})
+
 	$(document.body).on('wc_fragments_loaded', () => {
 		ctEvents.trigger('blocksy:frontend:init')
 	})
@@ -285,6 +294,12 @@ if ($) {
 
 	$(document).on('sf:ajaxfinish', () => {
 		ctEvents.trigger('blocksy:frontend:init')
+	})
+
+	$(document).on('ddwcpoRenderVariation', () => {
+		setTimeout(() => {
+			ctEvents.trigger('blocksy:frontend:init')
+		})
 	})
 }
 

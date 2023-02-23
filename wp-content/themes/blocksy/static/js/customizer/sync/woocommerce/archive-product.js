@@ -1,34 +1,5 @@
-import {
-	getCache,
-	getOptionFor,
-	getFreshHtmlFor,
-	setRatioFor,
-	changeTagName,
-	checkAndReplace,
-	watchOptionsWithPrefix,
-} from '../helpers'
+import { getOptionFor, setRatioFor, watchOptionsWithPrefix } from '../helpers'
 import ctEvents from 'ct-events'
-
-checkAndReplace({
-	id: 'has_shop_sort',
-
-	parent_selector: '.woo-listing-top',
-	selector: '.woocommerce-ordering',
-	fragment_id: 'shop-sort',
-	whenInserted: () => {
-		ctEvents.trigger('ct:custom-select:init')
-	},
-})
-
-checkAndReplace({
-	id: 'has_shop_results_count',
-
-	parent_selector: '.woo-listing-top',
-	selector: '.woocommerce-result-count',
-	fragment_id: 'shop-results-count',
-
-	strategy: 'maybeBefore:.woocommerce-ordering',
-})
 
 export const replaceCards = () => {
 	if (!document.querySelector('[data-products]')) {

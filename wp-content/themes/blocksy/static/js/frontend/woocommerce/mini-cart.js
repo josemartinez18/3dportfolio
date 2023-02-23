@@ -44,7 +44,9 @@ export const mount = () => {
 						(document.body.classList.contains('single-product') &&
 							cart.querySelector('[data-auto-open*="product"]')))
 				) {
+					cart.querySelector('[data-auto-open]').focusDisabled = true
 					cart.querySelector('[data-auto-open]').click()
+
 				}
 			})
 		}, 100)

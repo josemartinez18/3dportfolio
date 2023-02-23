@@ -1,5 +1,9 @@
 .ct-header-cta {
 
+	a {
+		gap: 0.5em;
+	}
+
 	// button size
 	[data-size="small"] {
 		--buttonMinHeight: 34px;
@@ -19,7 +23,7 @@
 	}
 
 	// button icon
-	.ct-icon-container {
+	.ct-icon {
 		--icon-color: currentColor;
 	}
 }

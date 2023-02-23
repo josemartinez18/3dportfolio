@@ -1,16 +1,17 @@
 [class*="menu-inline"] {
-	overflow: hidden; // if items spacing is too big
+	// overflow: hidden; // if items spacing is too big
 
 	ul {
 		flex-wrap: wrap;
 		justify-content: var(--horizontal-alignment);
-		margin: calc(var(--menu-items-spacing, 25px) / 2 * -1);
-		margin-bottom: 0;
+		row-gap: calc(var(--menu-items-spacing, 25px) / 2);
+		margin: 0 calc(var(--menu-items-spacing, 25px) / 2 * -1);
+		// margin-bottom: 0;
 	}
 
-	li {
-		margin-top: calc(var(--menu-items-spacing, 25px) / 2);
-	}
+	// li {
+	// 	margin-top: calc(var(--menu-items-spacing, 25px) / 2);
+	// }
 }
 
 

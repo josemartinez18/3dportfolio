@@ -16,6 +16,7 @@ import {
 	familyForDisplay,
 } from './helpers'
 import { __ } from 'ct-i18n'
+import $ from 'jquery'
 
 import bezierEasing from 'bezier-easing'
 
@@ -25,23 +26,27 @@ import FontsList from './FontsList'
 import VariationsList from './VariationsList'
 import FontOptions from './FontOptions'
 
+import Overlay from '../../../customizer/components/Overlay'
+
 import GenericOptionType from '../../GenericOptionType'
 
-const combineRefs = (...refs) => (el) => {
-	refs.map((ref) => {
-		if (typeof ref === 'function') {
-			ref(el)
-		} else if (
-			typeof ref === 'object' &&
-			ref !== null &&
-			ref.hasOwnProperty('current')
-		) {
-			ref.current = el
-		} else if (ref === null) {
-			// No-op
-		}
-	})
-}
+const combineRefs =
+	(...refs) =>
+	(el) => {
+		refs.map((ref) => {
+			if (typeof ref === 'function') {
+				ref(el)
+			} else if (
+				typeof ref === 'object' &&
+				ref !== null &&
+				ref.hasOwnProperty('current')
+			) {
+				ref.current = el
+			} else if (ref === null) {
+				// No-op
+			}
+		})
+	}
 
 function fuzzysearch(needle, haystack) {
 	var hlen = haystack.length
@@ -75,7 +80,13 @@ const TypographyModal = ({
 	setInititialView,
 	onChange,
 	wrapperProps = {},
+	confirmationRef,
+
+	isConfirmingGdpr,
+	setIsConfirmingGdpr,
 }) => {
+	const [shouldDismiss, setShouldDismiss] = useState(false)
+
 	const [typographyList, setTypographyList] = useState(
 		getDefaultFonts(option)
 	)
@@ -111,10 +122,9 @@ const TypographyModal = ({
 	const linearFontsList = Object.keys(typographyList).reduce(
 		(currentList, currentSource) => [
 			...currentList,
-			...(
-				typographyList[currentSource].families || []
-			).filter(({ family }) =>
-				fuzzysearch(searchTerm.toLowerCase(), family.toLowerCase())
+			...(typographyList[currentSource].families || []).filter(
+				({ family }) =>
+					fuzzysearch(searchTerm.toLowerCase(), family.toLowerCase())
 			),
 		],
 		[]
@@ -340,6 +350,20 @@ const TypographyModal = ({
 										linearFontsList={linearFontsList}
 										currentView={`${currentView}:${previousView}`}
 										onPickFamily={(family) => {
+											if (family.source === 'google') {
+												let source =
+													window.ct_customizer_localizations
+														? ct_customizer_localizations
+														: ct_localizations
+
+												if (
+													!source.dismissed_google_fonts_notice
+												) {
+													setIsConfirmingGdpr(family)
+													return
+												}
+											}
+
 											pickFontFamily(family)
 											// setCurrentView('options')
 											// setSearchTerm('')
@@ -367,6 +391,115 @@ const TypographyModal = ({
 					}}
 				</Transition>
 			</div>
+
+			<Overlay
+				items={!!isConfirmingGdpr}
+				className="ct-admin-modal ct-gdpr-fonts-notice"
+				onDismiss={() => {}}
+				render={() => (
+					<div
+						className="ct-modal-content"
+						ref={confirmationRef}
+						onClick={(e) => {
+							e.stopPropagation()
+						}}>
+						<i>
+							<svg width="20" height="20" viewBox="0 0 20 20">
+								<path d="M18.3,14.4c-0.1,0.3-0.4,0.6-0.8,0.6h-15c-0.4,0-0.7-0.2-0.8-0.6s0-0.7,0.3-0.9c0,0,2.1-1.6,2.1-6.8c0-3.2,2.6-5.8,5.8-5.8c3.2,0,5.8,2.6,5.8,5.8c0,5.2,2.1,6.8,2.1,6.8C18.3,13.7,18.4,14.1,18.3,14.4z M11.9,16.8c-0.4-0.2-0.9-0.1-1.1,0.3c-0.1,0.2-0.3,0.3-0.5,0.4c-0.2,0.1-0.4,0-0.6-0.1c-0.1-0.1-0.2-0.2-0.3-0.3c-0.2-0.4-0.7-0.5-1.1-0.3c-0.4,0.2-0.5,0.7-0.3,1.1c0.2,0.4,0.5,0.7,0.9,0.9c0.4,0.2,0.8,0.3,1.2,0.3c0.2,0,0.4,0,0.6-0.1c0.6-0.2,1.2-0.6,1.5-1.2C12.4,17.5,12.3,17,11.9,16.8z" />
+							</svg>
+						</i>
+						<h2 className="ct-modal-title">
+							{__(
+								"Looks like you've picked a Google Font",
+								'blocksy'
+							)}
+						</h2>
+
+						<p
+							dangerouslySetInnerHTML={{
+								__html: sprintf(
+									__(
+										'By using external Google Fonts, your website might not comply with the privacy regulations in your country. As an alternative you can use a system font, our %sLocal Google Fonts%s extension, or this %splugin%s.',
+										'blocksy'
+									),
+									'<a href="https://creativethemes.com/blocksy/docs/extensions/local-google-fonts/" target="_blank">',
+									'</a>',
+									'<a href="https://wordpress.org/plugins/local-google-fonts/" target="_blank">',
+									'</a>'
+								),
+							}}
+						/>
+
+						<div
+							className="ct-modal-actions has-divider"
+							data-buttons="2">
+							<div
+								className="ct-checkbox-container"
+								onClick={() => {
+									setShouldDismiss(!shouldDismiss)
+								}}>
+								<span
+									className={classnames('ct-checkbox', {
+										active: shouldDismiss,
+									})}>
+									<svg
+										width="10"
+										height="8"
+										viewBox="0 0 11.2 9.1">
+										<polyline
+											className="check"
+											points="1.2,4.8 4.4,7.9 9.9,1.2"></polyline>
+									</svg>
+								</span>
+
+								{__(
+									"I understand, don't show this notification again.",
+									'blocksy'
+								)}
+							</div>
+
+							<button
+								className="button"
+								onClick={() => {
+									setIsConfirmingGdpr(false)
+									setShouldDismiss(false)
+								}}>
+								{__('Cancel', 'blocksy')}
+							</button>
+
+							<button
+								className="button button-primary"
+								disabled={!shouldDismiss}
+								onClick={(e) => {
+									e.preventDefault()
+									pickFontFamily(isConfirmingGdpr)
+									setIsConfirmingGdpr(false)
+
+									if (shouldDismiss) {
+										let source =
+											window.ct_customizer_localizations
+												? ct_customizer_localizations
+												: ct_localizations
+
+										source.dismissed_google_fonts_notice =
+											'yes'
+
+										$.post(
+											ajaxurl,
+											{
+												wp_customize: 'on',
+												action: 'blocksy_dismissed_google_fonts_notice_handler',
+											},
+											() => {}
+										)
+									}
+								}}>
+								{__('Continue', 'blocksy')}
+							</button>
+						</div>
+					</div>
+				)}
+			/>
 		</animated.div>
 	)
 }

@@ -6,7 +6,6 @@ $arrows-width: 25%;
 	input[type="number"] {
 		--form-field-border-width: 1px 0 1px 1px;
 		--form-field-padding: 0 calc(#{$arrows-width} + 3px) 0 5px;
-		// padding: 0 calc(#{$arrows-width} + 3px) 0 5px;
 	}
 
 	.ct-increase, 
@@ -18,7 +17,6 @@ $arrows-width: 25%;
 
 		&:before {
 			content: '\e911';
-			// font-size: 8px;
 			font-size: calc(var(--quantity-height, 55px) / 6.7);
 		}
 	}

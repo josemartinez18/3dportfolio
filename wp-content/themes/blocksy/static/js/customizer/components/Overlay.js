@@ -21,6 +21,7 @@ const Overlay = ({
 	className,
 	initialFocusRef,
 	onDismiss,
+	onCloseButtonClick,
 }) => {
 	return (
 		<Transition
@@ -49,7 +50,11 @@ const Overlay = ({
 							}}>
 							<button
 								className="close-button"
-								onClick={() => onDismiss()}>
+								onClick={() =>
+									onCloseButtonClick
+										? onCloseButtonClick()
+										: onDismiss()
+								}>
 								×
 							</button>
 

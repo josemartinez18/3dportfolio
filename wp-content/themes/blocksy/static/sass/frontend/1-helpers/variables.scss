@@ -26,13 +26,9 @@
 
 	@include media-breakpoint-down(sm) {
 		--container-width-base: calc(88vw - var(--frame-size, 0px) * 2);
-		// --container-width: 88vw;
-		// --container-width: calc(88vw - var(--frame-size, 0px) * 2);
 	}
 
 	@include media-breakpoint-up(md) {
 		--container-width-base: calc(90vw - var(--frame-size, 0px) * 2);
-		// --container-width: 90vw;
-		// --container-width: calc(90vw - var(--frame-size, 0px) * 2);
 	}
 }

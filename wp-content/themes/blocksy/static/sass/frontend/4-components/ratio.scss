@@ -16,6 +16,14 @@
 		object-fit: var(--object-fit, cover);
 		object-position: var(--object-position, 50% 50%);
 	}
+
+	picture {
+		display: inline-flex;
+	}
+
+	iframe {
+		height: auto;
+	}
 }
 
 .ct-image-container-static {

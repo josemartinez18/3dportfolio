@@ -50,3 +50,18 @@ export var disable = function (el) {
 		}
 	}
 }
+
+export const scrollLockManager = () => {
+	if (window.ctFrontend && window.ctFrontend.scrollLockManager) {
+		return window.ctFrontend.scrollLockManager
+	}
+
+	window.ctFrontend = window.ctFrontend || {}
+
+	window.ctFrontend.scrollLockManager = {
+		enable,
+		disable,
+	}
+
+	return window.ctFrontend.scrollLockManager
+}

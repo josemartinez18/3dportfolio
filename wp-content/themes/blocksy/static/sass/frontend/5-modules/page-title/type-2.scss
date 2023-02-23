@@ -27,6 +27,10 @@
 		.ct-image-container {
 			height: 100%;
 			vertical-align: top;
+
+			img {
+				height: inherit;
+			}
 		}
 	}
 

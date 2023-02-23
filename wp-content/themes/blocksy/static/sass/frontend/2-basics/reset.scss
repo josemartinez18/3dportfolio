@@ -123,8 +123,19 @@ a {
 // focus
 a,
 button {
+	// &:focus {
+	// 	transition: none;
+	// 	outline-offset: var(--outline-offset, 3px);
+	// 	outline-color: var(--paletteColor2);
+	// }
+
 	&:focus {
 		transition: none;
+		outline-width: 0;
+	}
+
+	&:focus-visible {
+		outline-width: 2px;
 		outline-offset: var(--outline-offset, 3px);
 		outline-color: var(--paletteColor2);
 	}
@@ -153,8 +164,7 @@ video {
 embed,
 iframe,
 object,
-video,
-figure {
+video {
 	max-width: 100%;
 }
 

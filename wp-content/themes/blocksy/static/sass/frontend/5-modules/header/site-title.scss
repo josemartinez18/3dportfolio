@@ -5,10 +5,6 @@
 	&:not([data-logo='top']) {
 		align-items: center;
 	}
-
-	img {
-		max-width: initial;
-	}
 }
 
 .site-title {
@@ -31,10 +27,12 @@
 
 // logo
 .site-logo-container {
+	line-height: 0;
 	height: var(--logo-shrink-height, var(--logo-max-height, 50px));
 
 	img {
 		width: auto;
+		max-width: initial;
 		object-fit: contain;
 	}
 

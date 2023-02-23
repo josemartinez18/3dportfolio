@@ -9,8 +9,7 @@ $pill-size: 26px;
 .ct-color-picker-single {
 
 	&:not(:last-child) {
-		// margin-right: 10px;
-		margin-right: 6px;
+		margin-inline-end: 6px;
 	}
 
 	> span {

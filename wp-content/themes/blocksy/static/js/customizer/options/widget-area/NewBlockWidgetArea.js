@@ -50,6 +50,10 @@ const NewBlockWidgetArea = ({
 
 	useEffect(() => {
 		removeFilter('editor.BlockEdit', 'core/customize-widgets/block-edit')
+
+		return () => {
+			document.body.classList.remove('outer-section-open')
+		}
 	}, [])
 
 	const activeSidebarControl = wp.customize.control(

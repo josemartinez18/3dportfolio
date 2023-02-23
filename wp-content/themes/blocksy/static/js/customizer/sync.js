@@ -98,4 +98,3 @@ export {
 } from './sync/helpers'
 export { responsiveClassesFor } from './sync/helpers'
 export { typographyOption } from './sync/variables/typography'
-export { checkAndReplace } from './sync/helpers'

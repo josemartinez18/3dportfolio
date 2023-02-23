@@ -38,6 +38,10 @@ export const makeVariablesWithCondition = (
 							)
 						}
 
+						if (!wp.customize(currentKey)) {
+							return 'CT_CSS_SKIP_RULE'
+						}
+
 						let val = wp.customize(currentKey)()
 
 						if (!shouldOutput) {

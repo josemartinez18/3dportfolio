@@ -29,29 +29,46 @@ const TextArea = ({ id, value, option, onChange }) => {
 			mediaButtons: true,
 			...option,
 
-			tinymce: {
-				toolbar1:
-					'formatselect,styleselect,bold,italic,bullist,numlist,link,alignleft,aligncenter,alignright,wp_adv',
-				toolbar2:
-					'strikethrough,hr,forecolor,pastetext,removeformat,charmap,outdent,indent,undo,redo,wp_help',
+			...(window.tinymce
+				? {
+						tinymce: {
+							toolbar1:
+								'formatselect,styleselect,bold,italic,bullist,numlist,link,alignleft,aligncenter,alignright,wp_adv',
+							toolbar2:
+								'strikethrough,hr,forecolor,pastetext,removeformat,charmap,outdent,indent,undo,redo,wp_help',
 
-				...(typeof option.tinymce === 'object' ? option.tinymce : {}),
-				style_formats_merge: true,
-				style_formats: [],
-			},
+							...(typeof option.tinymce === 'object'
+								? option.tinymce
+								: {}),
+							style_formats_merge: true,
+							style_formats: [],
+						},
+				  }
+				: { tinymce: null }),
 		})
 
-		setTimeout(
-			() =>
-				window.tinymce.editors[editorId] &&
-				window.tinymce.editors[editorId].on('change', listener)
-		)
+		if (window.tinymce) {
+			setTimeout(
+				() =>
+					window.tinymce.editors[editorId] &&
+					window.tinymce.editors[editorId].on('change', listener)
+			)
+		}
 
 		if (wp.oldEditor) {
 			setTimeout(
 				() => {
 					setTimeout(() => {
-						window.tinymce.editors[editorId].off('change', listener)
+						if (
+							window.tinymce &&
+							window.tinymce.editors[editorId]
+						) {
+							window.tinymce.editors[editorId].off(
+								'change',
+								listener
+							)
+						}
+
 						correctEditor().remove(editorId)
 
 						correctEditor().initialize(editorId, {
@@ -59,28 +76,35 @@ const TextArea = ({ id, value, option, onChange }) => {
 							mediaButtons: true,
 							...option,
 
-							tinymce: {
-								toolbar1:
-									'formatselect,styleselect,bold,italic,bullist,numlist,link,alignleft,aligncenter,alignright,wp_adv',
-								toolbar2:
-									'strikethrough,hr,forecolor,pastetext,removeformat,charmap,outdent,indent,undo,redo,wp_help',
+							...(window.tinymce
+								? {
+										tinymce: {
+											toolbar1:
+												'formatselect,styleselect,bold,italic,bullist,numlist,link,alignleft,aligncenter,alignright,wp_adv',
+											toolbar2:
+												'strikethrough,hr,forecolor,pastetext,removeformat,charmap,outdent,indent,undo,redo,wp_help',
 
-								...(typeof option.tinymce === 'object'
-									? option.tinymce
-									: {}),
-								style_formats_merge: true,
-								style_formats: [],
-							},
+											...(typeof option.tinymce ===
+											'object'
+												? option.tinymce
+												: {}),
+											style_formats_merge: true,
+											style_formats: [],
+										},
+								  }
+								: { tinymce: null }),
 						})
 
-						setTimeout(
-							() =>
-								window.tinymce.editors[editorId] &&
-								window.tinymce.editors[editorId].on(
-									'change',
-									listener
-								)
-						)
+						if (window.tinymce) {
+							setTimeout(
+								() =>
+									window.tinymce.editors[editorId] &&
+									window.tinymce.editors[editorId].on(
+										'change',
+										listener
+									)
+							)
+						}
 					}, 300)
 				},
 
@@ -89,10 +113,11 @@ const TextArea = ({ id, value, option, onChange }) => {
 		}
 
 		return () => {
-			if (!window.tinymce.editors[editorId]) return
-
 			setTimeout(() => {
-				window.tinymce.editors[editorId].off('change', listener)
+				if (window.tinymce && window.tinymce.editors[editorId]) {
+					window.tinymce.editors[editorId].off('change', listener)
+				}
+
 				correctEditor().remove(editorId)
 			}, 300)
 		}

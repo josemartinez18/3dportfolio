@@ -3,6 +3,12 @@ import { typographyOption } from './typography'
 import { handleBackgroundOptionFor } from './background'
 
 export const getWooVariablesFor = () => ({
+	...handleBackgroundOptionFor({
+		id: 'shop_archive_background',
+		selector: '[data-prefix="woo_categories"]',
+		responsive: true,
+	}),
+
 	// Woocommerce archive
 	shop_cards_alignment_1: [
 		{

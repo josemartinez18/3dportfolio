@@ -11,15 +11,19 @@
 	[data-column='end'] {
 		min-width: 0;
 	}
-}
 
-
-// 1 column
-#header [data-column-set='1'] [data-column='middle'] {
 	[data-items] {
 		width: 100%;
 	}
 }
+
+
+// 1 column
+// #header [data-column-set='1'] [data-column='middle'] {
+// 	[data-items] {
+// 		width: 100%;
+// 	}
+// }
 
 // 2 columns
 #header [data-column-set='2'] > div {
@@ -43,6 +47,7 @@
 	display: grid;
 	grid-template-columns: auto auto;
 }
+
 
 // items alignment
 [data-column='middle'] > [data-items] {

@@ -5,6 +5,8 @@
 // .ct-elementor-default-template .site-main,
 .ct-elementor-default-template {
 
+
+	// old elementor row and columns (not flex box)
 	.elementor-top-section:not(.ct-section-stretched):not(.elementor-sticky) {
 		margin-left: var(--has-wide, auto);
 		margin-right: var(--has-wide, auto);
@@ -18,9 +20,19 @@
 	}
 
 
-	// flex container
+	// flex container (beta version - older than 3.8.0)
+	// maybe remove later
 	.e-container {
 		--container-max-width: #{'min(var(--block-max-width, var(--normal-container-max-width)), var(--container-width-base))'};
+	}
+
+	// elementor 3.8.0 container changes
+	.e-con {
+		--container-max-width: var(--block-max-width, var(--normal-container-max-width));
+
+		> .e-con-inner {
+			width: var(--block-width, var(--container-width));
+		}
 	}
 }
 

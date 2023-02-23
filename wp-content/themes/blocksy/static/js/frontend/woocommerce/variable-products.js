@@ -42,6 +42,10 @@ const makeUrlFor = ({ variation, productId, isQuickView }) => {
 }
 
 const replaceFirstImage = ({ container, image }) => {
+	if (!image) {
+		return
+	}
+
 	const containersToReplace = []
 
 	const selectorsToTry = [
@@ -74,7 +78,7 @@ const replaceFirstImage = ({ container, image }) => {
 		;[...imgContainer.querySelectorAll('.zoomImg')].map((img) => {
 			img.remove()
 		})
-		;[...imgContainer.querySelectorAll('img')].map((img) => {
+		;[...imgContainer.querySelectorAll('img, source')].map((img) => {
 			if (img.matches('.zoomImg')) {
 				return
 			}
@@ -165,7 +169,10 @@ const performInPlaceUpdate = ({
 		return
 	}
 
-	if (parseFloat(nextImage.id) === parseFloat(currentImage.id)) {
+	if (
+		currentImage &&
+		parseFloat(nextImage.id) === parseFloat(currentImage.id)
+	) {
 		return
 	}
 
@@ -293,7 +300,19 @@ export const mount = (el) => {
 				: false
 		}
 
+		let defaultCanDoInPlaceUpdate = '__DEFAULT__'
+
 		if (
+			variation &&
+			!variation.variation_id &&
+			currentElement.querySelector('.wcpa_form_outer')
+		) {
+			defaultCanDoInPlaceUpdate = true
+			nextVariationObj = variation
+		}
+
+		if (
+			defaultCanDoInPlaceUpdate === '__DEFAULT__' &&
 			!variation.variation_id &&
 			!currentVariation.dataset.currentVariation
 		) {
@@ -301,27 +320,34 @@ export const mount = (el) => {
 		}
 
 		if (
+			defaultCanDoInPlaceUpdate === '__DEFAULT__' &&
 			parseInt(variation.variation_id) ===
-			parseInt(currentVariation.dataset.currentVariation)
+				parseInt(currentVariation.dataset.currentVariation)
 		) {
 			return
 		}
 
-		if (variation.variation_id) {
-			currentVariation.dataset.currentVariation = variation.variation_id
+		if (
+			variation.variation_id ||
+			defaultCanDoInPlaceUpdate === '__DEFAULT__'
+		) {
+			currentVariation.dataset.currentVariation =
+				variation.variation_id || '0'
 		} else {
 			currentVariation.removeAttribute('data-current-variation')
 		}
 
 		const canDoInPlaceUpdate =
-			allVariations &&
-			[nextVariationObj, currentVariationObj].every((variation) => {
-				if (!variation) {
-					return true
-				}
+			defaultCanDoInPlaceUpdate === '__DEFAULT__'
+				? allVariations &&
+				  [nextVariationObj, currentVariationObj].every((variation) => {
+						if (!variation) {
+							return true
+						}
 
-				return variation.blocksy_gallery_source === 'default'
-			})
+						return variation.blocksy_gallery_source === 'default'
+				  })
+				: defaultCanDoInPlaceUpdate
 
 		if (canDoInPlaceUpdate) {
 			performInPlaceUpdate({
@@ -332,7 +358,7 @@ export const mount = (el) => {
 			return
 		}
 
-		const acceptHtml = (html) => {
+		const acceptHtml = (html, style) => {
 			const div = document.createElement('div')
 			div.innerHTML = html
 			;[...div.firstElementChild.children].map((el, index) => {
@@ -344,12 +370,16 @@ export const mount = (el) => {
 					el.remove()
 				}
 			})
+			let didInsert = false
 			;[...currentVariation.children].map((el, index) => {
 				if (el.matches('.flexy-container, .ct-image-container')) {
-					el.insertAdjacentHTML(
-						'beforebegin',
-						div.firstElementChild.innerHTML
-					)
+					if (!didInsert) {
+						didInsert = true
+						el.insertAdjacentHTML(
+							'beforebegin',
+							div.firstElementChild.innerHTML
+						)
+					}
 				}
 
 				if (
@@ -361,6 +391,14 @@ export const mount = (el) => {
 				}
 			})
 
+			currentVariation
+				.closest('.product')
+				.classList.remove('thumbs-left', 'thumbs-bottom')
+
+			if (currentVariation.querySelector('.flexy-container')) {
+				currentVariation.closest('.product').classList.add(style)
+			}
+
 			currentVariation.hasLazyLoadClickHoverListener = false
 
 			setTimeout(() => {
@@ -370,7 +408,10 @@ export const mount = (el) => {
 		}
 
 		if (variation.blocksy_gallery_html) {
-			acceptHtml(variation.blocksy_gallery_html)
+			acceptHtml(
+				variation.blocksy_gallery_html,
+				variation.blocksy_gallery_style
+			)
 			return
 		}
 
@@ -411,7 +452,7 @@ export const mount = (el) => {
 					return
 				}
 
-				acceptHtml(data.html)
+				acceptHtml(data.html, data.blocksy_gallery_style)
 			})
 	}
 }

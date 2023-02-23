@@ -31,3 +31,22 @@
 		flex: 0 0 130px;
 	}
 }
+
+.elementor-widget-woocommerce-cart .woocommerce {
+
+	.quantity[data-type] {
+
+		.input-text {
+			text-align: center;
+			max-height: initial;
+		}
+
+		span {
+			color: var(--quantity-arrows-initial-color, #fff);
+
+			&:hover {
+				color: var(--quantity-arrows-hover-color, #fff);
+			}
+		}
+	}
+}

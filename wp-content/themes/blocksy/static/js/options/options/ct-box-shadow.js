@@ -27,54 +27,7 @@ const BoxShadow = ({ value, option, onChange }) => {
 	const modalRef = useRef()
 
 	return (
-		<div
-			ref={el}
-			className={classnames('ct-box-shadow', {
-				'ct-disabled': !value.enable || value.inherit,
-			})}>
-			<SingleColorPicker
-				innerRef={colorPicker}
-				picker={{
-					id: 'default',
-					title: 'Initial',
-				}}
-				option={{
-					pickers: [
-						{
-							id: 'default',
-							title: 'Initial',
-						},
-					],
-				}}
-				isPicking={isPicking}
-				isTransitioning={isTransitioning}
-				modalRef={modalRef}
-				containerRef={containerRef}
-				onPickingChange={(isPicking) => {
-					if (!value.enable) {
-						return
-					}
-
-					setAnimationState({
-						isTransitioning: 'default',
-						isPicking,
-					})
-				}}
-				stopTransitioning={() =>
-					setAnimationState({
-						isPicking,
-						isTransitioning: false,
-					})
-				}
-				onChange={(colorValue) =>
-					onChange({
-						...value,
-						color: colorValue,
-					})
-				}
-				value={value.color}
-			/>
-
+		<div ref={el} className={classnames('ct-box-shadow')}>
 			<OutsideClickHandler
 				useCapture={false}
 				disabled={!isPicking}
@@ -115,6 +68,51 @@ const BoxShadow = ({ value, option, onChange }) => {
 						: __('None', 'blocksy')}
 				</span>
 			</OutsideClickHandler>
+
+			{value.enable && !value.inherit && (
+				<SingleColorPicker
+					innerRef={colorPicker}
+					picker={{
+						id: 'default',
+						title: 'Initial',
+					}}
+					option={{
+						pickers: [
+							{
+								id: 'default',
+								title: 'Initial',
+							},
+						],
+					}}
+					isPicking={isPicking}
+					isTransitioning={isTransitioning}
+					modalRef={modalRef}
+					containerRef={containerRef}
+					onPickingChange={(isPicking) => {
+						if (!value.enable) {
+							return
+						}
+
+						setAnimationState({
+							isTransitioning: 'default',
+							isPicking,
+						})
+					}}
+					stopTransitioning={() =>
+						setAnimationState({
+							isPicking,
+							isTransitioning: false,
+						})
+					}
+					onChange={(colorValue) =>
+						onChange({
+							...value,
+							color: colorValue,
+						})
+					}
+					value={value.color}
+				/>
+			)}
 
 			<BoxShadowModal
 				el={el}

@@ -138,12 +138,13 @@
 
 	button {
 		width: 48px;
-		padding: 0 24px 0 0;
+		// padding: 0 24px 0 0;
+		padding-inline-end: 24px;
 		background: #fff;
 		cursor: pointer;
 		border: none;
-		border-right: 1px solid #ddd;
-		border-left: 4px solid #fff;
+		border-inline-end: 1px solid #ddd;
+		border-inline-start: 4px solid #fff;
 
 		&:before {
 			font: normal 20px/48px dashicons;

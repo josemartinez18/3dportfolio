@@ -12,10 +12,13 @@ import {
 	familyForDisplay,
 	humanizeVariations,
 	fontFamilyToCSSFamily,
+	humanizeFontSource,
 } from './helpers'
 import { FixedSizeList as List } from 'react-window'
 import WebFontLoader from 'webfontloader'
 import AutoSizer from 'react-virtualized-auto-sizer'
+
+import { __ } from 'ct-i18n'
 
 let loadedFonts = []
 
@@ -74,9 +77,15 @@ const SingleFont = ({
 			)}
 			key={family.family}>
 			<span className="ct-font-name">
+				<span
+					className={`ct-font-type-${family.source}`}
+					title={humanizeFontSource(family.source)}>
+					{humanizeFontSource(family.source)[0]}
+				</span>
+				
 				{familyForDisplay(family.display || family.family)}
 
-				{family?.variable && <span>variable</span>}
+				{family.variable && <i>({__('Variable', 'blocksy')})</i>}
 			</span>
 			<span
 				style={{

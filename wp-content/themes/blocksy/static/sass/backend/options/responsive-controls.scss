@@ -10,6 +10,10 @@
 		cursor: pointer;
 		color: var(--color);
 
+		&:not(:last-child) {
+			margin-inline-end: 18px;
+		}
+
 		&.active {
 			--color: var(--accentColor);
 		}
@@ -22,13 +26,13 @@
 			}
 		}
 
-		// spacing
-		&.ct-desktop {
-			margin-right: 18px;
-		}
+		// // spacing
+		// &.ct-desktop {
+		// 	margin-inline-end: 18px;
+		// }
 
-		&.ct-tablet {
-			margin-right: 17px;
-		}
+		// &.ct-tablet {
+		// 	margin-inline-end: 17px;
+		// }
 	}
 }

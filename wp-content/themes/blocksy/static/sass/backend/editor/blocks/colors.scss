@@ -1,12 +1,5 @@
 :root {
 	color: var(--color);
-	box-shadow: var(--has-boxed, var(--box-shadow));
-	border-radius: var(--has-boxed, var(--border-radius));
-	padding: var(--has-boxed, var(--boxed-content-spacing));
-
-	// conditions
-	--true: initial;
-	--false: ;
 
 	// link color
 	a {

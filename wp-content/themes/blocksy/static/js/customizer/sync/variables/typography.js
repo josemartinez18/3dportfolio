@@ -253,9 +253,15 @@ export const getTypographyVariablesFor = () => ({
 	}),
 
 	...typographyOption({
-		id: 'blockquote',
+		id: 'quote',
 		selector:
-			'.wp-block-quote.is-style-large p, .wp-block-pullquote p, .ct-quote-widget blockquote',
+			'.wp-block-quote',
+	}),
+
+	...typographyOption({
+		id: 'pullquote',
+		selector:
+			'.wp-block-pullquote, .ct-quote-widget blockquote',
 	}),
 
 	...typographyOption({

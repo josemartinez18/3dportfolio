@@ -61,6 +61,11 @@ const FontOptions = ({ option, value, sizeRef, onChange, props }) => {
 								min: 0,
 								max: 100,
 							},
+
+							{
+								unit: '',
+								type: 'custom',
+							},
 						],
 					}}
 					hasRevertButton={true}

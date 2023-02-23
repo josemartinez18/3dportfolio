@@ -176,4 +176,10 @@ export const getFormsVariablesFor = () => ({
 			type: 'color:accent',
 		},
 	],
+
+	checkboxBorderRadius: {
+		selector: ':root',
+		variable: 'form-checkbox-border-radius',
+		unit: 'px',
+	},
 })

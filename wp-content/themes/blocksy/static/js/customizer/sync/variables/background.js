@@ -312,5 +312,6 @@ export const getBackgroundVariablesFor = () => ({
 		id: 'site_background',
 		selector: 'body',
 		responsive: true,
+		forced_background_image: true,
 	}),
 })

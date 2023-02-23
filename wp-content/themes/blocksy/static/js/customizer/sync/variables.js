@@ -112,9 +112,9 @@ const getAllVariables = () => {
 				},
 			],
 
-			// Page Hero
 			...getSingleContentVariablesFor(),
 
+			// Page Hero
 			...getHeroVariables(),
 
 			...getPostListingVariables(),

@@ -4,17 +4,8 @@
 	}
 }
 
-// .woocommerce-widget-layered-nav-list li {
-// 	display: flex;
-// 	align-items: center;
-
-// 	.count {
-// 		margin-inline-start: auto;
-// 		font-size: 80%;
-// 	}
-// }
-
 .wc-block-checkbox-list li label,
+.wc-block-components-checkbox__label,
 .woocommerce-widget-layered-nav-list li {
 	display: flex;
 	align-items: center;
@@ -29,7 +20,9 @@
 	}
 }
 
-
+.wc-block-checkbox-list__checkbox {
+	width: 100%;
+}
 
 
 .widget_rating_filter a,

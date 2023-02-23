@@ -4,9 +4,8 @@
 	position: relative;
 	min-height: calc(100vh - var(--admin-bar, 0px) - var(--frame-size, 0px) * 2);
 
-	@include media-breakpoint-down (md) {
-		overflow-x: hidden;
-	}
+	overflow: hidden; // to remove later, check caniuse.com
+	overflow: clip;
 
 	.site-main {
 		flex-grow: 1;

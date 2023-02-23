@@ -1,5 +1,6 @@
 .entry-button {
 	font-size: 15px;
+	align-self: var(--horizontal-alignment, flex-start);
 
 	&[data-type="simple"],
 	&[data-type="outline"] {
@@ -40,17 +41,18 @@
 	}
 
 	// alignment
-	&[data-alignment="left"] {
-		align-self: flex-start;
-	}
+	// &[data-alignment="left"] {
+	// 	align-self: flex-start;
+	// }
 
-	&[data-alignment="center"] {
-		align-self: center;
-	}
+	// &[data-alignment="center"] {
+	// 	align-self: center;
+	// }
 
-	&[data-alignment="right"] {
-		align-self: flex-end;
-	}
+	// &[data-alignment="right"] {
+	// 	align-self: flex-end;
+	// }
+
 }
 
 .entries:not([data-cards="cover"]) .entry-button {

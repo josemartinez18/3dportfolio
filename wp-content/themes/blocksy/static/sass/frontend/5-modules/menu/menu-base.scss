@@ -24,9 +24,11 @@
 	align-items: center;
 	position: relative;
 	width: 100%;
-	// text-align: initial;
-	padding: var(--menu-item-padding, 0px);
 	border-radius: var(--menu-item-radius, inherit);
+
+	&:not(:empty) {
+		padding: var(--menu-item-padding, 0px);
+	}
 }
 
 

@@ -13,7 +13,6 @@
 	font-size: var(--badge-font-size, 13px);
 	font-weight: 600;
 	line-height: 0;
-	// text-transform: uppercase;
 	margin: 0 !important;
 	color: var(--badge-text-color, #fff);
 	background-color: var(--badge-background-color, var(--paletteColor1));
@@ -25,10 +24,9 @@
 
 .onsale[data-shape="type-3"] {
 	--badge-font-size: 11px;
-	--badge-height: 45px;
-	--badge-padding: 3px;
 	--badge-radius: 200px;
-	min-width: 45px;
+	--badge-height: auto;
+	aspect-ratio: 1/1;
 }
 
 .out-of-stock-badge[data-shape="type-3"] {

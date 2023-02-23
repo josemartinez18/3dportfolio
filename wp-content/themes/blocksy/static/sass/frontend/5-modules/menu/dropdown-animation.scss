@@ -4,7 +4,7 @@
 		visibility: hidden;
 		pointer-events: none;
 		transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease,
-			margin 0.2s ease;
+			margin 0.2s ease, height 0.2s ease;
 	}
 
 	&.ct-active {
@@ -14,10 +14,17 @@
 			pointer-events: auto;
 		}
 	}
+
+	&:not(.ct-active):not([class*="ct-mega-menu"]) {
+		> .sub-menu {
+			overflow: hidden;
+			max-height: calc(100vh - var(--header-height) - var(--admin-bar, 0px) - var(--frame-size, 0px) - 10px);
+		}
+	}
 }
 
 // type 1
-[data-dropdown*='type-1'] .animated-submenu {
+[data-dropdown*='type-1'] .animated-submenu {	
 	> .sub-menu {
 		transform: translate3d(0, 10px, 0);
 	}

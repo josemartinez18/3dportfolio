@@ -1,14 +1,12 @@
-.wc-block-checkbox-list li,
-.woocommerce-widget-layered-nav-list li a {
+.wc-block-checkbox-list li:not([hidden]),
+.woocommerce-widget-layered-nav-list li:not([hidden]) a {
 	display: flex;
 	align-items: center;
 
 	input[type="checkbox"] {
-		top: 0;
+		--top: 0;
 	}
 }
-
-
 
 .woocommerce-widget-layered-nav-list li {
 	

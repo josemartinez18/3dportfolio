@@ -3,7 +3,7 @@ import _ from 'underscore'
 import classnames from 'classnames'
 import InputWithOnlyNumbers from '../components/InputWithOnlyNumbers'
 
-const round = (value) => Math.round(value * 10) / 10
+import { clamp, round } from './ct-slider'
 
 const NumberOption = ({
 	value,
@@ -15,28 +15,28 @@ const NumberOption = ({
 	const parsedValue =
 		markAsAutoFor && markAsAutoFor.indexOf(device) > -1 ? 'auto' : value
 
+	const min = !option.min && option.min !== 0 ? -Infinity : option.min
+	const max = !option.max && option.max !== 0 ? -Infinity : option.max
+
 	return (
 		<div
 			className={classnames('ct-option-number', {
 				[`ct-reached-limits`]:
-					parseFloat(parsedValue) === parseInt(option.min) ||
-					parseFloat(parsedValue) === parseInt(option.max),
+					parseFloat(parsedValue) === parseInt(min) ||
+					parseFloat(parsedValue) === parseInt(max),
 			})}
 			{...(attr || {})}>
 			<a
 				className={classnames('ct-minus', {
-					['ct-disabled']:
-						parseFloat(parsedValue) === parseInt(option.min),
+					['ct-disabled']: parseFloat(parsedValue) === parseInt(min),
 				})}
 				onClick={() =>
 					onChange(
 						round(
-							Math.min(
-								Math.max(
-									parseFloat(parsedValue) - parseFloat(step),
-									option.min || -Infinity
-								),
-								option.max || Infinity
+							clamp(
+								min,
+								max,
+								parseFloat(parsedValue) - parseFloat(step)
 							)
 						)
 					)
@@ -45,18 +45,15 @@ const NumberOption = ({
 
 			<a
 				className={classnames('ct-plus', {
-					['ct-disabled']:
-						parseFloat(parsedValue) === parseInt(option.max),
+					['ct-disabled']: parseFloat(parsedValue) === parseInt(max),
 				})}
 				onClick={() =>
 					onChange(
 						round(
-							Math.min(
-								Math.max(
-									parseFloat(parsedValue) + parseFloat(step),
-									option.min || -Infinity
-								),
-								option.max || Infinity
+							clamp(
+								min,
+								max,
+								parseFloat(parsedValue) + parseFloat(step)
 							)
 						)
 					)
@@ -68,41 +65,14 @@ const NumberOption = ({
 				step={step}
 				onBlur={() =>
 					parseFloat(parsedValue)
-						? onChange(
-								round(
-									Math.min(
-										Math.max(
-											parsedValue,
-											option.min || -Infinity
-										),
-										option.max || Infinity
-									)
-								)
-						  )
+						? onChange(round(clamp(min, max, parsedValue)))
 						: []
 				}
 				onChange={(value, can_safely_parse) =>
 					can_safely_parse && _.isNumber(parseFloat(value))
-						? onChange(
-								round(
-									Math.min(
-										Math.max(
-											value,
-											option.min || -Infinity
-										),
-										option.max || Infinity
-									)
-								)
-						  )
+						? onChange(round(clamp(min, max, value)))
 						: parseFloat(value)
-						? onChange(
-								round(
-									Math.min(
-										parseFloat(value),
-										option.max || Infinity
-									)
-								)
-						  )
+						? onChange(round(Math.min(parseFloat(value), max)))
 						: onChange(round(value))
 				}
 			/>

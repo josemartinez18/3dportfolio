@@ -1,20 +1,20 @@
 $buttons-base:
-	// 'button',
 	'.button',
-	'.submit',
 	'.ct-button',
 	'.added_to_cart',
 	'.ct-button-ghost',
 	'[type="submit"]',
-	'.wp-block-button .wp-block-button__link',
-	'.wp-block-file .wp-block-file__button',
-	'.forminator-ui[data-design="none"] .forminator-button',
+	'.wp-element-button',
+	'.wp-block-button__link',
+	// '.wp-block-file .wp-block-file__button',
 
 	// special buttons
-	'button[class*="ajax"]',
-	'button.regform-button',
+	'a.showlogin',
 	'a.restore-item',
-	'a.showlogin'
+	'button.regform-button',
+	'button[class*="ajax"]',
+	'.submit:where(:not(div.submit))',
+	'.forminator-ui[data-design="none"] .forminator-button',
 ;
 
 
@@ -37,7 +37,6 @@ $buttons-base:
 	&:disabled, &.disabled {
 		opacity: 0.5;
 		cursor: not-allowed;
-		// pointer-events: none;
 	}
 
 	@include media-breakpoint-down (xs) {

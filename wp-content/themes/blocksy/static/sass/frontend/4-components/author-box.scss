@@ -131,4 +131,12 @@
 		text-transform: uppercase;
 		display: inline-flex;
 	}
+
+
+	// special case with related posts
+	+ .ct-related-posts {
+		border-top: none;
+		margin-top: 0;
+		padding-top: 0;
+	}
 }

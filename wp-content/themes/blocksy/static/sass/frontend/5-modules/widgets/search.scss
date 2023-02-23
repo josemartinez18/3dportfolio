@@ -71,7 +71,7 @@ form.search-form {
 	}
 
 	&:not([data-live-results*='product_price']) {
-		.ct-search-item-price {
+		.price {
 			display: none;
 		}	
 	}

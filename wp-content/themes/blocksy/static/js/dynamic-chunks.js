@@ -39,16 +39,26 @@ const loadChunkWithPayload = (chunk, payload = {}, el = null) => {
 				(id) => chunk.deps_data[id]
 			)
 
-			if (depsThatAreNotLoadedIds.includes('underscore')) {
-				$script(chunk.deps_data.underscore, () => {
-					$script(
-						[chunk.url, ...depsThatAreNotLoaded],
-						immediateMount
-					)
+			;[...depsThatAreNotLoadedIds, 'root']
+				.map((x) => () => {
+					return new Promise((resolve) => {
+						if (x === 'root') {
+							$script([chunk.url], () => {
+								resolve()
+								immediateMount()
+							})
+							return
+						}
+
+						$script([chunk.deps_data[x]], () => {
+							resolve()
+						})
+					})
 				})
-			} else {
-				$script([chunk.url, ...depsThatAreNotLoaded], immediateMount)
-			}
+				.reduce(
+					(before, after) => before.then((_) => after()),
+					Promise.resolve()
+				)
 		} else {
 			$script(chunk.url, immediateMount)
 		}

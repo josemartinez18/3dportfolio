@@ -3,6 +3,7 @@
 
 	> ul {
 		display: flex;
+		column-gap: 7px;
 		margin: var(--tabs-pills-margin, 0 14px);
 
 		> li {
@@ -20,10 +21,6 @@
 			box-sizing: border-box;
 			color: #555;
 			background: #eaeaec;
-
-			&:not(:first-child) {
-				margin-left: 7px;
-			}
 
 			&.active {
 				position: relative;

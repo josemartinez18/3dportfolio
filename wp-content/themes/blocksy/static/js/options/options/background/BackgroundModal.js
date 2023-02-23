@@ -48,7 +48,7 @@ const BackgroundModal = ({
 								...value,
 								background_type: type,
 
-								...(type === 'gradient'
+								...(type === 'gradient' && !value.gradient
 									? {
 											gradient:
 												'linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%)',
@@ -76,12 +76,7 @@ const BackgroundModal = ({
 							value.background_type === 'pattern',
 						'ct-color-picker-modal':
 							value.background_type === 'gradient',
-						'ct-gradient-tab':
-							value.background_type === 'gradient' &&
-							window.wp.components.__experimentalGradientPicker,
-						'ct-gradient-tab-new':
-							value.background_type === 'gradient' &&
-							!window.wp.components.__experimentalGradientPicker,
+						'ct-gradient-tab': value.background_type === 'gradient',
 						'ct-color-tab': value.background_type === 'color',
 					},
 					'ct-modal-tabs-content'

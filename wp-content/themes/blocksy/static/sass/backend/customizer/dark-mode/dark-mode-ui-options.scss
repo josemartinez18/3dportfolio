@@ -300,21 +300,17 @@
 			background: transparent;
 		}
 
-		ul {
-			&:after,
-			li:not(:last-child) {
-				border-color: $border;
-			}
+		.ct-units-list {
+			background: $background_light;
 
-			li span {
+			span:not(:hover) {
 				color: lighten($background, 60%);
 			}
-		}
-	}
 
-	.ct-units-list,
-	.ct-styles-list {
-		background: $background_light;
+			&:after, span {
+				border-color: $border;
+			}
+		}
 	}
 
 	// notification

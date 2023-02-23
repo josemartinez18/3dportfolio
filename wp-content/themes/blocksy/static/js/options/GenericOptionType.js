@@ -3,6 +3,7 @@ import {
 	Fragment,
 	Component,
 	useState,
+	useRef,
 	useEffect,
 } from '@wordpress/element'
 import classnames from 'classnames'
@@ -67,6 +68,8 @@ const GenericOptionType = ({
 	purpose,
 }) => {
 	let maybeGutenbergDevice = null
+
+	const childComponentRef = useRef(null)
 
 	if (wp.data && wp.data.useSelect) {
 		maybeGutenbergDevice = wp.data.useSelect((select) => {
@@ -358,6 +361,15 @@ const GenericOptionType = ({
 			<OptionComponent
 				key={id}
 				{...{
+					...(option.type === 'ct-slider'
+						? {
+								ref: (c) => {
+									if (c) {
+										childComponentRef.current = c
+									}
+								},
+						  }
+						: {}),
 					option: {
 						...option,
 						value: isOptionResponsiveFor(option, {
@@ -495,6 +507,13 @@ const GenericOptionType = ({
 									)}
 									className="ct-revert"
 									onClick={() => {
+										if (
+											childComponentRef &&
+											childComponentRef.current
+										) {
+											childComponentRef.current.handleOptionRevert()
+										}
+
 										if (renderingConfig.performRevert) {
 											renderingConfig.performRevert({
 												onChangeFor,

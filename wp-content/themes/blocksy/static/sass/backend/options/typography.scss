@@ -107,6 +107,10 @@
 	}
 }
 
+.ct-typography-modal {
+	overflow: hidden;
+}
+
 .ct-typography-container {
 	display: flex;
 	flex-direction: column;
@@ -475,6 +479,8 @@
 			position: absolute;
 			font: 400 17px/17px dashicons;
 			content: '\f147';
+			// top: 40px;
+			top: 16px;
 			right: 20px;
 		}
 	}
@@ -495,10 +501,6 @@
 	padding: 0 20px;
 	box-sizing: border-box;
 
-	&:before {
-		top: 18px;
-	}
-
 	&:after {
 		position: absolute;
 		content: '';
@@ -516,15 +518,9 @@
 		align-items: center;
 		opacity: 0.7;
 
-		span {
-			font-size: 8px;
-			text-transform: uppercase;
-			letter-spacing: 0.05em;
-			line-height: 1;
-			padding: 6px;
-			margin-inline-start: 10px;
-			border-radius: 3px;
-			background: rgba(0, 0, 0, 0.1);
+		i {
+			font-style: normal;
+			margin-inline-start: 0.5em;
 		}
 	}
 
@@ -536,10 +532,27 @@
 		white-space: nowrap;
 	}
 
-	&:hover {
+	&:hover,
+	&.active {
 		.ct-font-name {
 			opacity: 1;
 		}
+	}
+
+
+	// font type badge
+	[class*="ct-font-type"] {
+		width: 12px;
+		height: 12px;
+		font-size: 12px;
+		font-weight: 500;
+		text-align: center;
+		line-height: 1;
+		padding: 2px;
+		border-radius: 2px;
+		opacity: inherit;
+		margin-inline-end: 0.6em;
+		background: rgba(0, 0, 0, 0.1);
 	}
 }
 

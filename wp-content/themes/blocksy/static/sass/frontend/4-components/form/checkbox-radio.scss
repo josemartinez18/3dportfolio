@@ -3,6 +3,7 @@ $checkbox:
 	'.comment-form input[type="checkbox"]',
 	'#ship-to-different-address-checkbox',
 	'.wc-block-checkbox-list input[type="checkbox"]',
+	'.wc-block-checkbox-list .wc-block-components-checkbox .wc-block-components-checkbox__input[type=checkbox]',
 	'.woocommerce-form__input[type="checkbox"]',
 	'.woocommerce-form__label-for-checkbox input[type="checkbox"]',
 	'#wc-stripe-new-payment-method[type="checkbox"]',
@@ -29,6 +30,7 @@ $radiobox:
 	min-width: 16px;
 	width: 16px;
 	height: 16px;
+	min-height: initial;
 	padding: 0 !important;
 	margin: var(--form-selection-control-margin, 0 0.7em 0 0);
 	border-width: var(--form-selection-control-border-width, var(--form-field-border-width, 1px));
@@ -53,8 +55,6 @@ $radiobox:
 	&:checked {
 		border-color: var(--form-selection-control-accent-color);
 		background: var(--form-selection-control-accent-color);
-		// border-color: var(--form-selection-control-accent-color) !important;
-		// background: var(--form-selection-control-accent-color) !important;
 
 		&:before {
 			opacity: 1;
@@ -64,14 +64,13 @@ $radiobox:
 	&:focus {
 		outline: none;
 		border-color: var(--form-selection-control-accent-color);
-		// border-color: var(--form-selection-control-accent-color) !important;
 	}
 }
 
 
 // checkbox only
 #{$checkbox} {
-	border-radius: 3px;
+	border-radius: var(--form-checkbox-border-radius, 3px);
 
 	&:before {
 		top: -2px;

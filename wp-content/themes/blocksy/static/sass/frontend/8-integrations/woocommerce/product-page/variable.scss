@@ -6,6 +6,7 @@ form.variations_form {
 		tr {
 			display: flex;
 			flex-direction: column;
+			gap: 10px;
 
 			&:not(:last-child) {
 				margin-bottom: 1.5em;
@@ -24,7 +25,8 @@ form.variations_form {
 
 		label {
 			display: block;
-			margin-bottom: 10px;
+			// margin-bottom: 10px;
+			margin-bottom: 0;
 			--fontWeight: 500;
 		}
 

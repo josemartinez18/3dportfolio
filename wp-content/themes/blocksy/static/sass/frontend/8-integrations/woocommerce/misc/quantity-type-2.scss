@@ -4,7 +4,6 @@
 	input[type="number"] {
 		--form-field-border-width: 1px;
 		--form-field-padding: 0 calc(var(--quantity-height, 55px) / 1.8 + 9%);
-		// padding: 0 calc(var(--quantity-height, 55px) / 1.8 + 9%);
 	}
 
 	.ct-increase, 
@@ -18,7 +17,6 @@
 
 		&:before {
 			margin-top: 2px;
-			// font-size: 10px;
 			font-size: calc(var(--quantity-height, 55px) / 5.5);
 		}
 	}

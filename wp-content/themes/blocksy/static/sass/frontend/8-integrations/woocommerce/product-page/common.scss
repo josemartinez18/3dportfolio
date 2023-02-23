@@ -47,17 +47,18 @@ form.cart {
 .ct-cart-actions {
 	display: flex;
 	flex-wrap: wrap;
+	gap: 10px;
 
 	> * {
 		order: var(--item-order, 5);
 		width: var(--item-width, 100%);
-		margin-bottom: var(--cart-actions-items-spacing, 10px);
+		// margin-bottom: var(--cart-actions-items-spacing, 10px);
 	}
 
 	.quantity {
 		--item-order: 1;
 		--quantity-height: var(--buttonMinHeight);
-		margin-inline-end: var(--cart-actions-items-spacing, 10px);
+		// margin-inline-end: var(--cart-actions-items-spacing, 10px);
 
 		@include media-breakpoint-down (xs) {
 			&[data-type='type-1'] {
@@ -72,10 +73,6 @@ form.cart {
 
 	// buttons
 	--button-padding: 5px 20px;
-	
-	// @include media-breakpoint-down (xs) {
-	// 	--buttonMinHeight: 45px;
-	// }
 
 	@include media-breakpoint-up (sm) {
 		--buttonMinHeight: 55px;
@@ -85,11 +82,11 @@ form.cart {
 		flex: 1;
 		--item-order: 2;
 
-		@include media-breakpoint-up (sm) {
-			&:not(.added) {
-				max-width: var(--button-width);
-			}
-		}
+		// @include media-breakpoint-up (sm) {
+		// 	&:not(.added) {
+		// 		max-width: var(--button-width);
+		// 	}
+		// }
 	}
 
 	.added_to_cart {
@@ -101,7 +98,17 @@ form.cart {
 
 		@include media-breakpoint-up (sm) {
 			flex: 1;
-			margin-inline-start: var(--cart-actions-items-spacing, 10px);
+			// margin-inline-start: var(--cart-actions-items-spacing, 10px);
+		}
+	}
+
+
+	.single_add_to_cart_button,
+	.added_to_cart {
+
+		@include media-breakpoint-up (md) {
+			max-width: var(--button-width);
 		}
 	}
 }
+

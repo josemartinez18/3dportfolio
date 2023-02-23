@@ -1,6 +1,7 @@
 $buttons-type-2:
 	'.ct-button-ghost',
-	'.wp-block-button.is-style-outline .wp-block-button__link',
+	'.wp-block-buttons .wp-block-button .wp-block-button__link.is-style-outline',
+	'.wp-block-buttons .wp-block-button.is-style-outline .wp-block-button__link',
 ;
 
 #{$buttons-type-2} {

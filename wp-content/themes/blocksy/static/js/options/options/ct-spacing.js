@@ -145,8 +145,6 @@ const Spacing = ({ value, option, onChange }) => {
 					</svg>
 				</a>
 
-				<span className="ct-value-divider"></span>
-
 				<div
 					onClick={() => setIsOpen(!isOpen)}
 					className="ct-current-value">
@@ -154,6 +152,7 @@ const Spacing = ({ value, option, onChange }) => {
 				</div>
 
 				<OutsideClickHandler
+					className="ct-units-list"
 					onOutsideClick={() => {
 						if (!isOpen) {
 							return
@@ -161,63 +160,32 @@ const Spacing = ({ value, option, onChange }) => {
 
 						setIsOpen(false)
 					}}>
-					<ul className="ct-units-list">
-						{units
-							.filter(({ unit }) => unit !== getCurrentUnit())
+					{units
+						.filter(({ unit }) => unit !== getCurrentUnit())
 
-							.reduce(
-								(current, el, index) => [
-									...current.slice(
-										0,
-										index % 2 === 0 ? undefined : -1
-									),
-									...(index % 2 === 0
-										? [[el]]
-										: [
-												[
-													current[
-														current.length - 1
-													][0],
-													el,
-												],
-										  ]),
-								],
-								[]
-							)
-
-							.map((group) => (
-								<li key={group[0].unit}>
-									{group.map(({ unit }) => (
-										<span
-											key={unit}
-											onClick={() => {
-												onChange({
-													...value,
-													top: getNumericValue(
-														value.top,
-														unit
-													),
-													left: getNumericValue(
-														value.left,
-														unit
-													),
-													right: getNumericValue(
-														value.right,
-														unit
-													),
-													bottom: getNumericValue(
-														value.bottom,
-														unit
-													),
-												})
-												setIsOpen(false)
-											}}>
-											{unit || '―'}
-										</span>
-									))}
-								</li>
-							))}
-					</ul>
+						.map(({ unit }) => (
+							<span
+								key={unit}
+								data-unit={unit}
+								onClick={() => {
+									onChange({
+										...value,
+										top: getNumericValue(value.top, unit),
+										left: getNumericValue(value.left, unit),
+										right: getNumericValue(
+											value.right,
+											unit
+										),
+										bottom: getNumericValue(
+											value.bottom,
+											unit
+										),
+									})
+									setIsOpen(false)
+								}}>
+								{unit || '―'}
+							</span>
+						))}
 				</OutsideClickHandler>
 			</div>
 		</div>

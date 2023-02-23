@@ -23,19 +23,21 @@
 	[class*="children"] > ul {
 		li {
 			a {
-				&:before {
-					position: absolute;
-					content: '';
-					top: calc(50% - 2px);
-					left: -30px;
-					width: 3px;
-					height: calc(3px * var(--has-indentation, 1));
-					opacity: 0.3;
-					border-radius: 5px;
-					background: currentColor;
-					transition: opacity 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955),
-								background 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955),
-								width 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+				&:not(:empty) {
+					&:before {
+						position: absolute;
+						content: '';
+						top: calc(50% - 2px);
+						left: -30px;
+						width: 3px;
+						height: calc(3px * var(--has-indentation, 1));
+						opacity: 0.3;
+						border-radius: 5px;
+						background: currentColor;
+						transition: opacity 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955),
+									background 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955),
+									width 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+					}
 				}
 			}
 		}

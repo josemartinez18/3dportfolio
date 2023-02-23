@@ -1,5 +1,4 @@
 import { responsiveClassesFor } from './helpers'
-import { checkAndReplace } from './helpers'
 import ctEvents from 'ct-events'
 
 const render = () => {

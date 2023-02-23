@@ -144,6 +144,7 @@ const closeSubmenu = (e) => {
 
 	if (childIndicator) {
 		childIndicator.setAttribute('aria-expanded', 'false')
+
 		if (childIndicator.tagName.toLowerCase() === 'button') {
 			childIndicator.setAttribute(
 				'aria-label',
@@ -197,6 +198,28 @@ export const mountMenuLevel = (menuLevel, args = {}) => {
 				'[data-interaction*="click"] *'
 			)
 
+			if (!el.hasFocusEventListener) {
+				el.hasFocusEventListener = true
+
+				el.addEventListener('keydown', function (e) {
+					if (e.keyCode == 27) {
+						closeSubmenu({
+							target: el.firstElementChild,
+						})
+					}
+				})
+
+				el.addEventListener('focusout', (evt) => {
+					if (el.contains(evt.relatedTarget)) {
+						return
+					}
+
+					closeSubmenu({
+						target: el.firstElementChild,
+					})
+				})
+			}
+
 			if (!hasClickInteraction) {
 				el.addEventListener('mouseenter', (e) => {
 					// So that mouseenter event is catched before the open itself
@@ -207,14 +230,6 @@ export const mountMenuLevel = (menuLevel, args = {}) => {
 							openSubmenu({ target: el.firstElementChild })
 						})
 					}
-
-					e.target
-						.closest('li')
-						.addEventListener('focusout', (evt) => {
-							if (!e.target.closest('li').contains(evt.target)) {
-								closeSubmenu(e)
-							}
-						})
 
 					// If first level
 					if (!el.parentNode.classList.contains('.sub-menu')) {
@@ -303,18 +318,6 @@ export const mountMenuLevel = (menuLevel, args = {}) => {
 									)
 								})
 							}
-
-							e.target
-								.closest('li')
-								.addEventListener('focusout', (evt) => {
-									if (
-										!e.target
-											.closest('li')
-											.contains(evt.target)
-									) {
-										closeSubmenu(e)
-									}
-								})
 						}
 					})
 				}
@@ -330,16 +333,6 @@ export const mountMenuLevel = (menuLevel, args = {}) => {
 						closeSubmenu(e)
 					} else {
 						openSubmenu(e)
-
-						e.target
-							.closest('li')
-							.addEventListener('focusout', (evt) => {
-								if (
-									!e.target.closest('li').contains(evt.target)
-								) {
-									closeSubmenu(e)
-								}
-							})
 					}
 				})
 			}

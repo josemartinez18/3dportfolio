@@ -1,7 +1,10 @@
-import { enable, disable } from './overlay/no-bounce'
+import { scrollLockManager } from './overlay/no-bounce'
 import ctEvents from 'ct-events'
 import { mount as mountMobileMenu } from './overlay/mobile-menu'
-import { focusLockOn, focusLockOff } from '../helpers/focus-lock'
+
+import { focusLockManager } from '../helpers/focus-lock'
+
+import { isTouchDevice } from '../helpers/is-touch-device'
 
 const showOffcanvas = (settings) => {
 	settings = {
@@ -91,15 +94,19 @@ const showOffcanvas = (settings) => {
 		settings.computeScrollContainer ||
 		settings.container.querySelector('.ct-panel-content')
 	) {
-		disable(
+		scrollLockManager().disable(
 			settings.computeScrollContainer
 				? settings.computeScrollContainer()
 				: settings.container.querySelector('.ct-panel-content')
 		)
 
 		setTimeout(() => {
-			focusLockOn(
-				settings.container.querySelector('.ct-panel-content').parentNode
+			focusLockManager().focusLockOn(
+				settings.container.querySelector('.ct-panel-content')
+					.parentNode,
+				{
+					focusOnMount: !settings.focus,
+				}
 			)
 		})
 	}
@@ -130,6 +137,7 @@ const hideOffcanvas = (settings, args = {}) => {
 
 	args = {
 		closeInstant: false,
+		shouldFocusOriginalTrigger: true,
 		...args,
 	}
 
@@ -145,8 +153,20 @@ const hideOffcanvas = (settings, args = {}) => {
 		),
 
 		...document.querySelectorAll(`[href*="${settings.container.id}"]`),
-	].map((trigger) => {
+	].map((trigger, index) => {
 		trigger.setAttribute('aria-expanded', 'false')
+
+		if (args.shouldFocusOriginalTrigger && !isTouchDevice()) {
+			if (!trigger.focusDisabled) {
+				setTimeout(() => {
+					if (index === 0) {
+						trigger.focus()
+					}
+				}, 50)
+			}
+
+			trigger.focusDisabled = false
+		}
 	})
 
 	settings.container.classList.remove('active')
@@ -155,7 +175,7 @@ const hideOffcanvas = (settings, args = {}) => {
 		document.body.removeAttribute('data-panel')
 		ctEvents.trigger('ct:modal:closed', settings.container)
 
-		enable(
+		scrollLockManager().enable(
 			settings.computeScrollContainer
 				? settings.computeScrollContainer()
 				: settings.container.querySelector('.ct-panel-content')
@@ -170,7 +190,7 @@ const hideOffcanvas = (settings, args = {}) => {
 					document.body.removeAttribute('data-panel')
 					ctEvents.trigger('ct:modal:closed', settings.container)
 
-					enable(
+					scrollLockManager().enable(
 						settings.computeScrollContainer
 							? settings.computeScrollContainer()
 							: settings.container.querySelector(
@@ -178,7 +198,7 @@ const hideOffcanvas = (settings, args = {}) => {
 							  )
 					)
 
-					focusLockOff(
+					focusLockManager().focusLockOff(
 						settings.container.querySelector('.ct-panel-content')
 							.parentNode
 					)
@@ -303,6 +323,10 @@ export const handleClick = (e, settings) => {
 					return
 				}
 
+				if (maybeA.classList.contains('ct-overlay-skip')) {
+					return
+				}
+
 				if (
 					!maybeA.closest('nav[data-id*="menu"]') &&
 					!maybeA.closest('[data-id*="text"]') &&
@@ -316,6 +340,7 @@ export const handleClick = (e, settings) => {
 
 				hideOffcanvas(settings, {
 					closeInstant: maybeA.getAttribute('href')[0] !== '#',
+					shouldFocusOriginalTrigger: false,
 				})
 
 				setTimeout(() => {

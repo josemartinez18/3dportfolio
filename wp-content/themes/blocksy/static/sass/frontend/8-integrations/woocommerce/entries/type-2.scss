@@ -2,6 +2,7 @@
 	grid-row-gap: var(--grid-columns-gap, 30px);
 
 	.product {
+		position: relative;
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;

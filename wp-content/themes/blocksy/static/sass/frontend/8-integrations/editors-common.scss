@@ -19,6 +19,8 @@
 [class*="ct-container"] > article {
 	--has-background: var(--has-boxed);
 	--has-boxed-structure: var(--has-boxed);
+	--wp--style--global--content-size: var(--block-max-width);
+	--wp--style--global--wide-size: var(--block-wide-max-width);
 	
 	box-shadow: var(--has-boxed, var(--box-shadow));
 	border: var(--has-boxed, var(--boxed-content-border));

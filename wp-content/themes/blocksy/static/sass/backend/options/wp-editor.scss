@@ -1,6 +1,6 @@
 .ct-option-editor {
 	.wp-editor-container {
-		border-color: #dfdfdf;
+		border-color: var(--optionBorderColor);
 
 		.mce-tinymce {
 			border: none;
@@ -8,11 +8,18 @@
 	}
 
 	.mce-tinymce {
-		border: 1px solid #dfdfdf;
+		border: 1px solid var(--optionBorderColor);
 		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 	}
 	
 	.mce-top-part:before {
 		box-shadow: none;
+	}
+
+	// texteditor
+	textarea {
+		width: 100%;
+		border-radius: 0;
+		opacity: 1 !important;
 	}
 }

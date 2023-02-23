@@ -2,54 +2,36 @@
 	display: flex;
 	align-items: center;
 	justify-content: flex-end;
+	column-gap: 10px;
 
-	> * {
-		&:first-child {
-			order: 2;
-			margin-left: 10px;
-		}
+	.ct-value-changer {
+		width: 75px;
+		order: 1;
 	}
 
-	.ct-disabled {
-		justify-content: center;
 
-		input, .ct-value-divider {
-			display: none;
-		}
-
-		~ .ct-color-picker-container {
-			display: none;
-		}
-	}
-
-	.ct-color-picker-container:not(:last-child) {
-		margin-right: 10px;
-	}
-
-	[data-style]:before {
+	// border styles
+	[data-style]:not([data-style='none']):after {
 		content: '';
-		width: 22px;
+		width: 18px;
 		border-bottom-width: 2px;
 		border-bottom-color: currentColor;
 	}
 
-	[data-style="dotted"]:before {
+	[data-style='dotted']:after {
 		border-bottom-style: dotted;
 	}
 
-	[data-style="solid"]:before {
+	[data-style='solid']:after {
 		border-bottom-style: solid;
 	}
 
-	[data-style="dashed"]:before {
+	[data-style='dashed']:after {
 		border-bottom-style: dashed;
 	}
 
-	[data-style="none"] {
-		font-size: 9px;
-		
-		&:before {
-			display: none;
-		}
+	.ct-units-list [data-style='none'] {
+		font-size: 8px;
+		letter-spacing: initial;
 	}
 }

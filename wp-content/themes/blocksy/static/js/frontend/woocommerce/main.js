@@ -99,6 +99,8 @@ const initShortcut = () => {
 
 			el.hasChangeListener = true
 
+			let request = null
+
 			$(el).on('change', (e) => {
 				var item_hash = $(el)
 					.attr('name')
@@ -107,7 +109,12 @@ const initShortcut = () => {
 				var item_quantity = $(el).val()
 				var currentVal = parseFloat(item_quantity)
 
-				$.ajax({
+				if (request) {
+					request.abort()
+					request = null
+				}
+
+				request = $.ajax({
 					type: 'POST',
 					url: ct_localizations.ajax_url,
 					data: {

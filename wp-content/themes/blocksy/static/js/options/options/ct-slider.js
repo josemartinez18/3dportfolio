@@ -9,14 +9,16 @@ import linearScale from 'simple-linear-scale'
 
 import OutsideClickHandler from './react-outside-click-handler'
 
-const clamp = (min, max, value) => Math.max(min, Math.min(max, value))
+import { __ } from 'ct-i18n'
+
+export const clamp = (min, max, value) => Math.max(min, Math.min(max, value))
 const clampMax = (max, value) => Math.min(max, value)
 
-const round = (value, decimalPlaces = 1) => {
-	// return Math.round(value)
-
+export const round = (value, decimalPlaces = 1) => {
 	const multiplier = Math.pow(10, decimalPlaces)
+
 	const rounded = Math.round(value * multiplier + Number.EPSILON) / multiplier
+
 	return rounded
 }
 
@@ -28,35 +30,74 @@ var roundWholeNumbers = function (num, precision) {
 
 const UnitsList = ({
 	option,
+	value,
 	onChange,
 	is_open,
 	toggleOpen,
 	currentUnit,
 	getNumericValue,
 	getAllowedDecimalPlaces,
+
+	forced_current_unit,
+	setForcedCurrentUnit,
 }) => {
 	const pickUnit = (unit) => {
 		const numericValue = getNumericValue()
 
-		onChange(
-			`${round(
-				clamp(
-					option.units.find(({ unit: u }) => u === unit).min,
-					option.units.find(({ unit: u }) => u === unit).max,
-					numericValue === '' ? -Infinity : numericValue
-				),
-				getAllowedDecimalPlaces(unit)
-			)}${unit}`
+		let futureUnitDescriptor = option.units.find(
+			({ unit: u }) => u === unit
 		)
+
+		if (Object.keys(futureUnitDescriptor).includes('min')) {
+			onChange(
+				`${round(
+					clamp(
+						option.units.find(({ unit: u }) => u === unit).min,
+						option.units.find(({ unit: u }) => u === unit).max,
+						numericValue === '' ? -Infinity : numericValue
+					),
+					getAllowedDecimalPlaces(unit)
+				)}${unit}`
+			)
+		} else {
+			onChange(value)
+		}
+
+		if (
+			futureUnitDescriptor.unit === '' &&
+			futureUnitDescriptor.type === 'custom'
+		) {
+			setForcedCurrentUnit('')
+		} else {
+			setForcedCurrentUnit('__DEFAULT__')
+		}
 	}
+
+	let futureUnitDescriptor = option.units.find(
+		({ unit: u }) => u === currentUnit
+	)
 
 	return (
 		<Fragment>
-			<span onClick={() => toggleOpen()} className="ct-current-value">
-				{currentUnit || '―'}
+			<span
+				onClick={() => toggleOpen()}
+				className="ct-current-value"
+				data-unit={
+					currentUnit ||
+					(futureUnitDescriptor &&
+					futureUnitDescriptor.type === 'custom'
+						? __('custom', 'blocksy')
+						: '')
+				}>
+				{currentUnit ||
+					(futureUnitDescriptor &&
+					futureUnitDescriptor.type === 'custom'
+						? __('Custom', 'blocksy')
+						: '―')}
 			</span>
 
 			<OutsideClickHandler
+				className="ct-units-list"
 				onOutsideClick={() => {
 					if (!is_open) {
 						return
@@ -64,38 +105,22 @@ const UnitsList = ({
 
 					toggleOpen()
 				}}>
-				<ul className="ct-units-list">
-					{option.units
-						.filter(({ unit }) => unit !== currentUnit)
-
-						.reduce(
-							(current, el, index) => [
-								...current.slice(
-									0,
-									index % 2 === 0 ? undefined : -1
-								),
-								...(index % 2 === 0
-									? [[el]]
-									: [[current[current.length - 1][0], el]]),
-							],
-							[]
-						)
-
-						.map((group) => (
-							<li key={group[0].unit}>
-								{group.map(({ unit }) => (
-									<span
-										key={unit}
-										onClick={() => {
-											pickUnit(unit)
-											toggleOpen()
-										}}>
-										{unit || '―'}
-									</span>
-								))}
-							</li>
-						))}
-				</ul>
+				{option.units
+					.filter(({ unit }) => unit !== currentUnit)
+					.map(({ unit, type }) => (
+						<span
+							key={unit}
+							data-unit={type === 'custom' ? 'custom' : unit}
+							onClick={() => {
+								pickUnit(unit)
+								toggleOpen()
+							}}>
+							{unit ||
+								(type === 'custom'
+									? __('Custom', 'blocksy')
+									: '―')}
+						</span>
+					))}
 			</OutsideClickHandler>
 		</Fragment>
 	)
@@ -105,6 +130,8 @@ export default class Slider extends Component {
 	state = {
 		is_dragging: false,
 		is_open: false,
+		is_empty_input: false,
+		forced_current_unit: '__DEFAULT__',
 	}
 
 	el = createRef()
@@ -116,7 +143,7 @@ export default class Slider extends Component {
 		const decimals = this.props.option.units
 			? this.props.option.units.find(
 					({ unit }) => unit === (properUnit || this.getCurrentUnit())
-			  ).decimals
+			  )?.decimals || 0
 			: this.props.option.decimals
 
 		return decimals !== 0 && !decimals ? 0 : decimals
@@ -130,39 +157,56 @@ export default class Slider extends Component {
 			: currentUnit || defaultUnit
 
 	getCurrentUnit = () => {
+		if (this.state.forced_current_unit !== '__DEFAULT__') {
+			return this.state.forced_current_unit
+		}
+
+		if (!this.props.option.units) {
+			return ''
+		}
+
 		let defaultUnit = this.props.option.units
 			? this.props.option.units[0].unit
 			: ''
 
-		if (this.props.value === 'NaN' || this.props.value === '') {
+		if (
+			this.props.value === 'NaN' ||
+			this.props.value === '' ||
+			this.props.value === 'CT_CSS_SKIP_RULE'
+		) {
 			return defaultUnit
 		}
 
-		return this.props.option.units
-			? this.withDefault(
-					this.props.value
-						.toString()
-						.replace(/[0-9]/g, '')
-						.replace(/\-/g, '')
-						.replace(/\./g, '')
-						.replace('CT_CSS_SKIP_RULE', ''),
-					this.props.option.units[0].unit
-			  )
-			: ''
+		let computedUnit = this.props.value
+			.toString()
+			.replace(/[0-9]/g, '')
+			.replace(/\-/g, '')
+			.replace(/\./g, '')
+			.replace('CT_CSS_SKIP_RULE', '')
+
+		let maybeActualUnit = this.props.option.units.find(
+			({ unit }) => unit === computedUnit
+		)
+
+		if (maybeActualUnit) {
+			return computedUnit
+		}
+
+		return ''
 	}
 
 	getMax = () =>
 		this.props.option.units
 			? this.props.option.units.find(
 					({ unit }) => unit === this.getCurrentUnit()
-			  ).max
+			  )?.max || 0
 			: this.props.option.max
 
 	getMin = () => {
 		return this.props.option.units
 			? this.props.option.units.find(
 					({ unit }) => unit === this.getCurrentUnit()
-			  ).min
+			  )?.min || 0
 			: this.props.option.min
 	}
 
@@ -192,12 +236,8 @@ export default class Slider extends Component {
 	}
 
 	computeAndSendNewValue({ pageX, shiftKey }) {
-		let {
-			top,
-			left,
-			right,
-			width,
-		} = this.el.current.getBoundingClientRect()
+		let { top, left, right, width } =
+			this.el.current.getBoundingClientRect()
 
 		let elLeftOffset = pageX - left - pageXOffset
 
@@ -237,7 +277,23 @@ export default class Slider extends Component {
 		this.detachEvents()
 	}
 
+	handleFocus = () => {
+		if (this.isCustomValueInput()) {
+			this.setState({
+				forced_current_unit: this.getCurrentUnit(),
+			})
+		}
+	}
+
+	handleOptionRevert = () => {
+		this.setState({
+			forced_current_unit: '__DEFAULT__',
+		})
+	}
+
 	handleBlur = () => {
+		this.setState({ is_empty_input: false })
+
 		if (this.props.option.value === 'CT_CSS_SKIP_RULE') {
 			if (this.props.value === 'CT_CSS_SKIP_RULE') {
 				return
@@ -271,10 +327,17 @@ export default class Slider extends Component {
 			}
 		}
 
-		if (value.toString().trim() === '') {
-			this.props.onChange('')
+		if (this.isCustomValueInput()) {
+			this.props.onChange(value)
 			return
 		}
+
+		if (value.toString().trim() === '') {
+			this.setState({ is_empty_input: true })
+			return
+		}
+
+		this.setState({ is_empty_input: false })
 
 		this.props.onChange(
 			`${clampMax(
@@ -312,8 +375,8 @@ export default class Slider extends Component {
 		)
 	}
 
-	render() {
-		const leftValue = `${linearScale(
+	getLeftValue() {
+		return `${linearScale(
 			[parseFloat(this.getMin(), 10), parseFloat(this.getMax(), 10)],
 			[0, 100]
 		)(
@@ -334,76 +397,120 @@ export default class Slider extends Component {
 					: parseFloat(this.getMin(), 10)
 			)
 		)}`
+	}
 
+	isCustomValueInput() {
+		if (!this.hasUnitsList()) return false
+
+		let maybeUnit = this.props.option.units.find(({ unit: u }) => u === '')
+
+		if (!maybeUnit) {
+			return false
+		}
+
+		return (
+			this.getCurrentUnit() === '' &&
+			maybeUnit.unit === '' &&
+			maybeUnit.type === 'custom'
+		)
+	}
+
+	render() {
 		return (
 			<div className="ct-option-slider">
 				{this.props.beforeOption && this.props.beforeOption()}
 
-				<div
-					onMouseDown={({ pageX, pageY }) => {
-						this.attachEvents()
-						this.setState({ is_dragging: true })
-					}}
-					onClick={(e) => this.computeAndSendNewValue(e)}
-					ref={this.el}
-					className="ct-slider"
-					{...(this.props.option.steps
-						? { ['data-steps']: '' }
-						: {})}>
-					<div style={{ width: `${leftValue}%` }} />
-					<span
-						tabIndex="0"
-						onKeyDown={(e) => {
-							const valueForComputation = this.getNumericValue()
-
-							let step =
-								1 / Math.pow(10, this.getAllowedDecimalPlaces())
-
-							let actualStep = e.shiftKey ? step * 10 : step
-
-							/**
-							 * Arrow up or left
-							 */
-							if (e.keyCode === 38 || e.keyCode === 39) {
-								e.preventDefault()
-
-								this.props.onChange(
-									`${clamp(
-										parseFloat(this.getMin(), 10),
-										parseFloat(this.getMax(), 10),
-										valueForComputation + actualStep
-									)}${this.getCurrentUnit()}`
-								)
+				{this.isCustomValueInput() ? (
+					<>
+						<input
+							type="text"
+							{...(this.props.option.ref
+								? { ref: this.props.option.ref }
+								: {})}
+							value={
+								this.state.is_empty_input ||
+								this.props.value === 'NaN' ||
+								(this.props.value || '')
+									.toString()
+									.indexOf('CT_CSS_SKIP_RULE') > -1
+									? ''
+									: this.props.value
 							}
-
-							/**
-							 * Arrow down or right
-							 */
-							if (e.keyCode === 40 || e.keyCode === 37) {
-								e.preventDefault()
-
-								this.props.onChange(
-									`${clamp(
-										parseFloat(this.getMin(), 10),
-										parseFloat(this.getMax(), 10),
-										valueForComputation - actualStep
-									)}${this.getCurrentUnit()}`
-								)
+							onFocus={() => this.handleFocus()}
+							onChange={({ target: { value } }) =>
+								this.handleChange(value)
 							}
+						/>
+					</>
+				) : (
+					<div
+						onMouseDown={({ pageX, pageY }) => {
+							this.attachEvents()
+							this.setState({ is_dragging: true })
 						}}
-						style={{
-							'--position': `${leftValue}%`,
-						}}
-					/>
+						onClick={(e) => this.computeAndSendNewValue(e)}
+						ref={this.el}
+						className="ct-slider"
+						{...(this.props.option.steps
+							? { ['data-steps']: '' }
+							: {})}>
+						<div style={{ width: `${this.getLeftValue()}%` }} />
+						<span
+							tabIndex="0"
+							onKeyDown={(e) => {
+								const valueForComputation =
+									this.getNumericValue()
 
-					{this.props.option.steps && (
-						<section className={this.props.option.steps}>
-							<i className="minus"></i>
-							<i className="zero"></i>
-							<i className="plus"></i>
-						</section>
-					)}
-				</div>
+								let step =
+									1 /
+									Math.pow(10, this.getAllowedDecimalPlaces())
+
+								let actualStep = e.shiftKey ? step * 10 : step
+
+								/**
+								 * Arrow up or left
+								 */
+								if (e.keyCode === 38 || e.keyCode === 39) {
+									e.preventDefault()
+
+									this.props.onChange(
+										`${clamp(
+											parseFloat(this.getMin(), 10),
+											parseFloat(this.getMax(), 10),
+											valueForComputation + actualStep
+										)}${this.getCurrentUnit()}`
+									)
+								}
+
+								/**
+								 * Arrow down or right
+								 */
+								if (e.keyCode === 40 || e.keyCode === 37) {
+									e.preventDefault()
+
+									this.props.onChange(
+										`${clamp(
+											parseFloat(this.getMin(), 10),
+											parseFloat(this.getMax(), 10),
+											valueForComputation - actualStep
+										)}${this.getCurrentUnit()}`
+									)
+								}
+							}}
+							style={{
+								'--position': `${this.getLeftValue()}%`,
+							}}
+						/>
+
+						{this.props.option.steps && (
+							<section className={this.props.option.steps}>
+								<i className="minus"></i>
+								<i className="zero"></i>
+								<i className="plus"></i>
+							</section>
+						)}
+					</div>
+				)}
 
 				{!this.props.option.skipInput && (
 					<div
@@ -413,22 +520,33 @@ export default class Slider extends Component {
 							'no-unit-list': !this.hasUnitsList(),
 							active: this.state.is_open,
 						})}>
-						<input
-							type="number"
-							{...(this.props.option.ref
-								? { ref: this.props.option.ref }
-								: {})}
-							step={
-								1 / Math.pow(10, this.getAllowedDecimalPlaces())
-							}
-							value={this.getNumericValue()}
-							onBlur={() => this.handleBlur()}
-							onChange={({ target: { value } }) =>
-								this.handleChange(value)
-							}
-						/>
-
-						<span className="ct-value-divider"></span>
+						{!this.isCustomValueInput() && (
+							<>
+								<input
+									type="number"
+									{...(this.props.option.ref
+										? { ref: this.props.option.ref }
+										: {})}
+									step={
+										1 /
+										Math.pow(
+											10,
+											this.getAllowedDecimalPlaces()
+										)
+									}
+									value={
+										this.state.is_empty_input
+											? ''
+											: this.getNumericValue()
+									}
+									onFocus={() => this.handleFocus()}
+									onBlur={() => this.handleBlur()}
+									onChange={({ target: { value } }) => {
+										this.handleChange(value)
+									}}
+								/>
+							</>
+						)}
 
 						{!this.hasUnitsList() && (
 							<span className="ct-current-value">
@@ -442,8 +560,15 @@ export default class Slider extends Component {
 						{this.hasUnitsList() && (
 							<UnitsList
 								option={this.props.option}
+								value={this.props.value}
 								onChange={this.props.onChange}
 								is_open={this.state.is_open}
+								forced_current_unit={
+									this.state.forced_current_unit
+								}
+								setForcedCurrentUnit={(unit) => {
+									this.setState({ forced_current_unit: unit })
+								}}
 								toggleOpen={() =>
 									this.setState({
 										is_open: !this.state.is_open,

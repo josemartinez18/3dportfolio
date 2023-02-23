@@ -336,7 +336,7 @@ const getVariablesForPrefix = (prefix) => ({
 		id: 'courses_single_hero_actions_font',
 		selector: `[data-prefix="${prefix}"] .tutor-course-details-actions > a`,
 	}),
-	
+
 	courses_single_hero_actions_colors: [
 		{
 			selector: `[data-prefix="${prefix}"] .tutor-course-details-actions > a`,
@@ -369,7 +369,17 @@ const getVariablesForPrefix = (prefix) => ({
 	},
 })
 
-export const getHeroVariables = () => getVariablesForPrefix(getPrefixFor())
+export const getHeroVariables = () => {
+	if (document.body.dataset.prefix !== getPrefixFor()) {
+		return {}
+	}
+
+	if ((document.body.dataset.prefixCustom || '').indexOf('hero') > -1) {
+		return {}
+	}
+
+	return getVariablesForPrefix(getPrefixFor())
+}
 
 watchOptionsWithPrefix({
 	getPrefix: () => getPrefixFor(),
@@ -422,9 +432,8 @@ watchOptionsWithPrefix({
 				}
 
 				if (singleLayer.id === 'custom_description') {
-					let description = heroElementsContainer.querySelector(
-						'.page-description'
-					)
+					let description =
+						heroElementsContainer.querySelector('.page-description')
 
 					if (singleLayer.enabled && description) {
 						responsiveClassesFor(
@@ -441,9 +450,10 @@ watchOptionsWithPrefix({
 					) {
 						const metaElements = singleLayer.meta_elements
 
-						let el = heroElementsContainer.querySelectorAll(
-							'.entry-meta'
-						)
+						let el =
+							heroElementsContainer.querySelectorAll(
+								'.entry-meta'
+							)
 
 						if (
 							heroElements.filter(
@@ -506,9 +516,8 @@ watchOptionsWithPrefix({
 					document.querySelector('.hero-section figure') &&
 					parallaxOutput.length > 0
 				) {
-					document.querySelector(
-						'.hero-section'
-					).dataset.parallax = parallaxOutput.join(':')
+					document.querySelector('.hero-section').dataset.parallax =
+						parallaxOutput.join(':')
 				}
 			}
 

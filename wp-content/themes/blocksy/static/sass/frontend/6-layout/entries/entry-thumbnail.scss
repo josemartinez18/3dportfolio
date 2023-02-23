@@ -42,8 +42,11 @@
 }
 
 [data-hover="zoom-in"] {
-	> *:hover .ct-image-container img {
-		transform: scale(1.1);
+
+	@media (hover: hover) {
+		> *:hover .ct-image-container img {
+			transform: scale(1.1);
+		}
 	}
 }
 
@@ -52,8 +55,10 @@
 		transform: scale(1.1);
 	}
 
-	> *:hover .ct-image-container img {
-		transform: scale(1.0);
+	@media (hover: hover) {
+		> *:hover .ct-image-container img {
+			transform: scale(1.0);
+		}
 	}
 }
 
@@ -67,7 +72,9 @@
 		opacity: 0;
 	}
 
-	> *:hover .ct-swap {
-		opacity: 1;
+	@media (hover: hover) {
+		> *:hover .ct-swap {
+			opacity: 1;
+		}
 	}
 }
